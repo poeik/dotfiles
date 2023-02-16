@@ -1,0 +1,6 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Tobias Wyss
+	email = towyss@gmail.com
+[core]
+	excludesfile = ~/.gitignore

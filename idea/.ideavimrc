@@ -1,0 +1,75 @@
+let mapleader=" "
+
+"" Source your .vimrc
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=8
+set relativenumber
+set number
+
+" IntellJ settings
+set NERDTree
+
+" Do incremental searching.
+set incsearch
+
+
+" plugins
+
+Plug 'tpope/vim-commentary'
+
+" mappings
+
+" enable line reordering with capital "j" & "k" in visual mode
+" not working for some reason ...
+" vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+" vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vnoremap J :m'>+1<CR>gv=gv
+vnoremap K :m'<-2<CR>gv=gv
+" vnoremap J <Action>(MoveLineDown)
+" vnoremap K <Action>(MoveLineUp)
+
+" fuzzy finder
+map <leader>sf :action GotoFile<CR>
+"open terminal
+map <leader>t :action ActivateTerminalToolWindow<CR>
+
+" Nerdtree 
+map <leader>pv :NERDTreeFocus<CR>
+map <leader>pt :NERDTreeToggle<CR>
+
+" keep selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+" cursor stays in the middle with half page jumps
+nmap <C-d> <C-d>zz
+nmap <C-u> <C-u>zz
+
+" switch tabs
+nmap <c-l> <Action>(NextTab)
+nmap <c-h> <Action>(PreviousTab)
+
+" search terms stay in the middle
+nmap n nzzzv
+nmap N Nzzzv
+
+" replace without adding old text to clipboard
+xmap <Leader>p "_dP
+
+" to/from system clipboard
+vmap <Leader>y "+y
+nmap <Leader>P "+P
+
+" Map \r to the Reformat Code action
+map <leader>l <Action>(ReformatCode)
+map <leader>6 <Action>(RenameElement)
+nmap <leader>8 <Action>(ToggleLineBreakpoint)
+
+" Map <leader>d to start debug
+map <leader>d <Action>(Debug)
+map <leader>r <Action>(Run)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
