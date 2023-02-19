@@ -4,6 +4,14 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     selected=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d | fzf)
+    #   directories=(
+#     $(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d)
+#     $(find ~/workspaces/personal -mindepth 2 -maxdepth 2 -type d)
+#   )
+#   direcotries=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d)
+#     
+#     selected=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d | fzf)
+
 fi
 
 if [[ -z $selected ]]; then
