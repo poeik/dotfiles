@@ -1,16 +1,15 @@
-#!/usr/bin/env bash
-# taken from ThePrimeagen
+#!/bin/zsh
+
+# inspired by theprimeagen 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d | fzf)
-    #   directories=(
-#     $(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d)
-#     $(find ~/workspaces/personal -mindepth 2 -maxdepth 2 -type d)
-#   )
-#   direcotries=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d)
-#     
-#     selected=$(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d | fzf)
+
+directories=(
+  $(find ~/workspaces/personal -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/workspaces/fhnw/active -mindepth 2 -maxdepth 2 -type d)
+) 
+selected=$(echo $directories | tr " " "\n" | fzf)
 
 fi
 
