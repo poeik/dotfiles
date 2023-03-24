@@ -14,13 +14,7 @@ return require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 	-- color scheme
-	use({
-		'rose-pine/neovim',
-		as = 'rose-pine',
-		config = function()
-			vim.cmd('colorscheme rose-pine')
-		end
-	})
+	use { "catppuccin/nvim", as = "catppuccin" }
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}) -- syntax highlighting for different languages
 	use('theprimeagen/harpoon') -- quick access files
@@ -55,4 +49,9 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+
+  -- navigation utilities
+  use('preservim/nerdtree')
+  use('christoomey/vim-tmux-navigator')
+
 end)

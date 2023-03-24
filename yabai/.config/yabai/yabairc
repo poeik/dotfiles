@@ -45,6 +45,7 @@ yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Finder$" title="^Connect to Server$" manage=off
 yabai -m rule --add app="^Cisco AnyConnect Secure Mobility Client$" manage=off
 yabai -m rule --add app="Raycast" manage=off
+yabai -m rule --add title="^Todoist$" manage=off # start  window of jetbrains idea
 yabai -m rule --add title="^Copy$" manage=off # copy window of jetbrains idea
 yabai -m rule --add title="^Move$" manage=off # move window of jetbrains idea
 yabai -m rule --add title="^Delete$" manage=off # delete window of jetbrains idea
@@ -53,6 +54,6 @@ yabai -m rule --add title="^Welcome to" manage=off # start  window of jetbrains 
 yabai -m rule --add title="^Evaluate$" manage=off # Evaluate window of jetbrains ides
 yabai -m rule --add title="^Settings$" manage=off # start  window of jetbrains idea
 yabai -m rule --add title="^Add File to Git$" manage=off # start  window of jetbrains idea
-yabai -m rule --add app="^Microsoft Teams$" title="^Teams Notification$" manage=off # teams call notificationet
+yabai -m rule --add app="^Microsoft Teams$"  manage=off # teams call notifications
 
 echo "yabai configuration loaded.."
