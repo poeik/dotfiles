@@ -4,7 +4,7 @@ let mapleader=" "
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
 set scrolloff=8
-set relativenumber
+set relativenumber " disable mit set norelativenumber
 set number
 
 " IntellJ settings
@@ -71,7 +71,10 @@ nmap <leader>8 <Action>(ToggleLineBreakpoint)
 
 " Map <leader>d to start debug
 map <leader>d <Action>(Debug)
-map <leader>r <Action>(Run)
+map <leader>g <Action>(Run)
+map <leader>c <Action>(Stop)
+map <leader>c <Action>(Stop)
 
+map <leader>vd <Action>(ShowErrorDescription)
 
 " Find more examples here: https://jb.gg/share-ideavimrc

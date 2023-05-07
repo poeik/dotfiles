@@ -22,6 +22,8 @@ return require('packer').startup(function(use)
 	use('tpope/vim-fugitive') -- git support
 	use('ThePrimeagen/vim-be-good') -- vim learning game (start using :VimBeGood)
 
+  use('neovimhaskell/nvim-hs.vim')
+
 	-- adds better lsp support. Uses Mason in background.
 	use {
 		'VonHeikemen/lsp-zero.nvim',
@@ -53,5 +55,6 @@ return require('packer').startup(function(use)
   -- navigation utilities
   use('preservim/nerdtree')
   use('christoomey/vim-tmux-navigator')
+  use {'stevearc/dressing.nvim'}
 
 end)

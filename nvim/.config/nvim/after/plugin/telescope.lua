@@ -9,7 +9,7 @@ local themes = require('telescope.themes')
 -- indicates whether hidden files should be shown
 local hidden = false
 
-vim.keymap.set('n', '<C-p>', builtin.git_files, {}) -- only looks for files managed by git
+--vim.keymap.set('n', '<leader>g', builtin.git_files, {}) -- only looks for files managed by git
 vim.keymap.set('n', '<leader>sf', function() builtin.find_files({hidden = hidden}) end, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>ss', builtin.lsp_document_symbols, { desc = '[S]earch [S]iles' })
 vim.keymap.set('n', '<leader>ws', builtin.lsp_workspace_symbols, { desc = '[S]earch [S]iles' })

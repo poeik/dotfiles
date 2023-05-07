@@ -41,10 +41,10 @@ alt - e : yabai -m window --toggle split
 # balance size of windows
 ctrl + cmd - 0 : yabai -m space --balance
 
-ctrl + cmd - h : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
-ctrl + cmd - j : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
-ctrl + cmd - k : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
-ctrl + cmd - l : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
+ctrl + cmd - h : yabai -m window west --resize right:-40:0 2> /dev/null || yabai -m window --resize right:-40:0
+ctrl + cmd - j : yabai -m window north --resize bottom:0:40 2> /dev/null || yabai -m window --resize bottom:0:40
+ctrl + cmd - k : yabai -m window south --resize top:0:-40 2> /dev/null || yabai -m window --resize top:0:-40
+ctrl + cmd - l : yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0
 
 # move window and focus desktop
 shift + ctrl - 1 : yabai -m window --space 1; yabai -m space --focus 1
@@ -76,13 +76,5 @@ shift + ctrl - 9 : yabai -m window --space 9; yabai -m space --focus 9
 # shift + alt - s : yabai -m window --display 2; yabai -m display --focus 2 # to next screen
 # shift + alt - d : yabai -m window --display 3; yabai -m display --focus 3 # to next screen
 
-
-# increase window size
-# shift + alt - w : yabai -m window --resize top:0:-20
-# shift + alt - d : yabai -m window --resize left:-20:0
-
-# decrease window size
-# shift + alt - s : yabai -m window --resize bottom:0:-20
-# shift + alt - a : yabai -m window --resize top:0:20
 
 

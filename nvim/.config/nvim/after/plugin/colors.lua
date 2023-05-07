@@ -1,11 +1,14 @@
--- run :lua ColorMyPencils() to recolor neovim after a PackerSync
+-- run :lua SetColorScheme() to recolor neovim after a PackerSync
 
-function ColorMyPencils(color)
+function SetColorScheme(color)
+	color = color or "macchiato"
+
   --  catppuccin catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-	color = color or "catppuccin-mocha"
-	vim.cmd.colorscheme(color)
+	vim.cmd.colorscheme("catppuccin-" .. color)
 end
 
 
-ColorMyPencils()
+White = function() SetColorScheme("latte") end
+Dark = SetColorScheme
 
+Dark()

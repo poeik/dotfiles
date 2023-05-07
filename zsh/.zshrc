@@ -115,6 +115,8 @@ alias wsfhnw="cd /Users/wysstobi/workspaces/fhnw/active"
 alias cdws="cd ~/workspaces"
 alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
 
+alias G="nvim . -c G" # open fugitive in current folder
+
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
