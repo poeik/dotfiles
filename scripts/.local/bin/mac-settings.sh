@@ -1,3 +1,4 @@
+# more settings at: https://apple.stackexchange.com/questions/14001/how-to-turn-off-all-animations-on-os-x/63477#63477
 # Disable animations when opening and closing windows.
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 

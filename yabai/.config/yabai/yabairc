@@ -56,4 +56,9 @@ yabai -m rule --add title="^Settings$" manage=off # start  window of jetbrains i
 yabai -m rule --add title="^Add File to Git$" manage=off # start  window of jetbrains idea
 yabai -m rule --add app="^Microsoft Teams$"  manage=off # teams call notifications
 
+
+# react to signals
+yabai -m signal --add event=display_added action="~/.local/bin/rearrange-spaces.sh"
+yabai -m signal --add event=display_removed action="~/.local/bin/rearrange-spaces.sh"
+
 echo "yabai configuration loaded.."
