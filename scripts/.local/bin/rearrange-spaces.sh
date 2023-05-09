@@ -17,6 +17,7 @@ apps["Microsoft Outlook"]=8
 apps["Microsoft Teams"]=7
 
 start () {
+
   displayAmount=$(yabai -m query --displays | jq -c "length")
   spacesPerDisplay=$((desiredSpaceAmount / displayAmount))
 
@@ -28,10 +29,10 @@ start () {
 
     if (( diff > 0 )); then
       echo "too many spaces, destroy! $diff"
-      destroySpaces $diff # with absolute value
+      destroySpaces $diff $displayId
     elif (( diff < 0)); then
       echo "too few spaces create! ${diff#-}"
-      createSpaces ${diff#-}
+      createSpaces ${diff#-} # with absolute value
     fi
   done
 
@@ -49,9 +50,10 @@ createSpaces() {
 
 destroySpaces() {
   amount=$1
+  displayId=$2
   for i in {1..$amount}
+    yabai -m space --destroy last --display $displayId
   do
-    yabai -m space --destroy last
   done
 }
 
