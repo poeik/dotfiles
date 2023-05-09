@@ -4,3 +4,9 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
 # Accelerated playback when adjusting the window size.
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+# opening and closing quick look window
+defaults write -g QLPanelAnimationDuration -float 0.001
+
+
+

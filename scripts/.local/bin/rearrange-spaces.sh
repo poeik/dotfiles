@@ -17,8 +17,13 @@ apps["Microsoft Outlook"]=8
 apps["Microsoft Teams"]=7
 
 start () {
-
   displayAmount=$(yabai -m query --displays | jq -c "length")
+  if [[ ! ($displayAmount -eq 3 || $displayAmount -eq 1) ]]; then 
+    echo "Behaviour for $displayAmount is not defined, exit"
+    return 0
+  fi
+  echo "Currently are $displayAmount display attached."
+
   spacesPerDisplay=$((desiredSpaceAmount / displayAmount))
 
   for i in {1..$displayAmount}
@@ -52,8 +57,8 @@ destroySpaces() {
   amount=$1
   displayId=$2
   for i in {1..$amount}
-    yabai -m space --destroy last --display $displayId
   do
+    yabai -m space --destroy last --display $displayId
   done
 }
 
