@@ -11,6 +11,8 @@ apps["CLion"]=1
 # utilities
 apps["Google Chrome"]=2
 apps["Notion"]=4
+apps["Finder"]=3
+apps["Preview"]=3
 
 # messaging
 apps["Microsoft Outlook"]=8
@@ -29,8 +31,8 @@ start () {
   for i in {1..$displayAmount}
   do
     focusDisplay $i
-    spacesOnDisplay=$(yabai -m query --displays --display | jq ".spaces | length")
-    diff=$((spacesOnDisplay - spacesPerDisplay))
+    currentSpaceAmountOfActiveDisplay=$(yabai -m query --displays --display | jq ".spaces | length")
+    diff=$((currentSpaceAmountOfActiveDisplay - spacesPerDisplay))
 
     if (( diff > 0 )); then
       echo "too many spaces, destroy! $diff"
@@ -56,9 +58,15 @@ createSpaces() {
 destroySpaces() {
   amount=$1
   displayId=$2
-  for i in {1..$amount}
+  spacesOnCurrentDisplay=($(yabai -m query --displays --display $displayId | jq ".spaces" | sed -e 's/\[//g' -e 's/\]//g' -e 's/\,/ /g'))
+  amountOfSpacesOnCurrentDisplay=${#spacesOnCurrentDisplay[@]}
+  destroyTo=$((amountOfSpacesOnCurrentDisplay - amount + 1))
+  echo "display $displayId has following spaces on it: $spacesOnCurrentDisplay, the last $amount will be destroyed!"
+  for i in {$amountOfSpacesOnCurrentDisplay..$destroyTo}
   do
-    yabai -m space --destroy last --display $displayId
+    nextSpaceToDestroy=$spacesOnCurrentDisplay[$i]
+    echo "destroy space: $nextSpaceToDestroy on display $displayId"
+    yabai -m space --destroy $nextSpaceToDestroy
   done
 }
 
