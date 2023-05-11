@@ -15,6 +15,7 @@ return require('packer').startup(function(use)
 	}
 	-- color scheme
 	use { "catppuccin/nvim", as = "catppuccin" }
+	use { "rebelot/kanagawa.nvim" }
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}) -- syntax highlighting for different languages
 	use('theprimeagen/harpoon') -- quick access files
