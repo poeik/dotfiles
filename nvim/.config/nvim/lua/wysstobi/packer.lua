@@ -14,8 +14,7 @@ return require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 	-- color scheme
-	use { "catppuccin/nvim", as = "catppuccin" }
-	use { "rebelot/kanagawa.nvim" }
+	use { 'rebelot/kanagawa.nvim' }
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}) -- syntax highlighting for different languages
 	use('theprimeagen/harpoon') -- quick access files
@@ -55,6 +54,7 @@ return require('packer').startup(function(use)
 
   -- navigation utilities
   use('preservim/nerdtree')
+  use('ryanoasis/vim-devicons')
   use('christoomey/vim-tmux-navigator')
   use {'stevearc/dressing.nvim'}
 
