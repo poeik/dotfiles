@@ -47,9 +47,6 @@ vnoremap = =gv
 nmap <C-d> <C-d>zz
 nmap <C-u> <C-u>zz
 
-" switch tabs
-nmap <c-l> <Action>(NextTab)
-nmap <c-h> <Action>(PreviousTab)
 
 nmap <leader><CR>
 
