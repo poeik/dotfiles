@@ -1,3 +1,7 @@
+ctrl - space : osascript ~/.local/bin/new-iterm-window.scpt
+alt + cmd - space : open ~
+
+# YABAI config
 # focus window
 # alt - j : yabai -m window --focus prev || yabai -m window --focus last
 # alt - k : yabai -m window --focus next || yabai -m window --focus first
@@ -7,17 +11,10 @@ alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north 
 
 # swap managed window
-
-# shift + alt - j : yabai -m window --swap prev || yabai -m window --swap last
-# shift + alt - k : yabai -m window --swap next || yabai -m window --swap first
 shift + alt - h : yabai -m window --warp west || (yabai -m window --display west; yabai -m display --focus west)
 shift + alt - l : yabai -m window --warp east || (yabai -m window --display east; yabai -m display --focus east)
 shift + alt - j : yabai -m window --warp south
 shift + alt - k : yabai -m window --warp north
-
-# rotate tree
-# shift + alt - r : yabai -m space --rotate 90
-# shift + alt - e : yabai -m space --rotate 270
 
 
 # swap layout
@@ -67,23 +64,6 @@ ctrl - 6 : yabai -m space --focus 6
 ctrl - 7 : yabai -m space --focus 7
 ctrl - 8 : yabai -m space --focus 8
 ctrl - 9 : yabai -m space --focus 9
-# create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-# shift + alt - n : yabai -m space --create && \
-#                    index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                    yabai -m window --space "${index}" && \
-#                    yabai -m space --focus "${index}"
-
-# fast focus desktop
-# alt - tab : yabai -m space --focus recent
-
-# send window to monitor and follow focus
-# alt   - a 	: yabai -m display --focus 1    # first screen
-# alt   - s 	: yabai -m display --focus 2    # second screen
-# alt   - d 	: yabai -m display --focus 3    # third screen
-
-# shift + alt - a : yabai -m window --display 1; yabai -m display --focus 1 # to next screen
-# shift + alt - s : yabai -m window --display 2; yabai -m display --focus 2 # to next screen
-# shift + alt - d : yabai -m window --display 3; yabai -m display --focus 3 # to next screen
 
 
 
