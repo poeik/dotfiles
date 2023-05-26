@@ -2,6 +2,7 @@
 
 desiredSpaceAmount=9
 
+maxTries=3
 declare -A apps
 # Code
 apps["iTerm2"]=1
@@ -19,6 +20,13 @@ apps["Microsoft Outlook"]=8
 apps["Microsoft Teams"]=7
 
 start () {
+  # just that we do not run in an endless recursion
+  local currentTry=$1
+  if [[ $currentTry -eq $maxTries ]]; then 
+    echo "Could not fix spaces in $maxTries attempts, exiting."
+    return
+  fi
+
   local displayAmount=$(yabai -m query --displays | jq -c "length")
   if [[ ! ($displayAmount -eq 3 || $displayAmount -eq 1) ]]; then 
     echo "Behaviour for $displayAmount is not defined, exit"
@@ -43,8 +51,18 @@ start () {
   done
 
   moveWindowsToCorrectSpaces
-  yabai -m space --focus 1
+
+  local everythingOk=$(checkEverythingIsOk)
+
+  if [[ $everythingOk -eq 1 ]]; then
+    # something went wrong, start all over
+    currentTry=$((currentTry + 1))
+    start $currentTry
+  else
+    yabai -m space --focus 1
+  fi
 }
+
 
 createSpaces() {
   local amount=$1
@@ -92,4 +110,25 @@ moveWindowsToCorrectSpaces() {
   done
 }
 
-start
+checkEverythingIsOk() {
+  # currently only the maount of spaces per display is checked
+  local displayAmount=$(yabai -m query --displays | jq -c "length")
+  local spacesPerDisplay=$((desiredSpaceAmount / displayAmount))
+  local everythingOk=0
+
+  for i in {1..$displayAmount}
+  do
+    local displayId=$i
+    focusDisplay $displayId
+    local currentSpaceAmountOfActiveDisplay=$(yabai -m query --displays --display | jq ".spaces | length")
+    local diff=$((currentSpaceAmountOfActiveDisplay - spacesPerDisplay))
+
+    if [[ diff -ne 0 ]]; then
+      everythingOk=1
+      break
+    fi
+  done
+  echo $everythingOk 
+}
+
+start 0
