@@ -1,7 +1,11 @@
 ctrl - space : osascript ~/.local/bin/new-iterm-window.scpt
 alt + cmd - space : open ~
 
-# YABAI config
+# ----- YABAI bindings ------
+
+# rearrange-spaces
+ctrl + alt + cmd - r: zsh /Users/wysstobi/.local/bin/rearrange-spaces.sh
+
 # focus window
 # alt - j : yabai -m window --focus prev || yabai -m window --focus last
 # alt - k : yabai -m window --focus next || yabai -m window --focus first

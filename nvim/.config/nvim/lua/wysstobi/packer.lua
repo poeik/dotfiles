@@ -21,6 +21,8 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree') -- access filehistory
 	use('tpope/vim-fugitive') -- git support
 	use('ThePrimeagen/vim-be-good') -- vim learning game (start using :VimBeGood)
+  use('ryanoasis/vim-devicons')
+	use('lervag/vimtex')
 
   use('neovimhaskell/nvim-hs.vim')
 
@@ -54,7 +56,6 @@ return require('packer').startup(function(use)
 
   -- navigation utilities
   use('preservim/nerdtree')
-  use('ryanoasis/vim-devicons')
   use('christoomey/vim-tmux-navigator')
   use {'stevearc/dressing.nvim'}
 

@@ -9,3 +9,5 @@ vim.keymap.set("n", "<F5>",
   end
 )
 
+-- get snippets
+vim.keymap.set("n", "<C-s>", ":Snips<CR>")
