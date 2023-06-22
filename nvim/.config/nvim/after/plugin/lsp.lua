@@ -1,4 +1,6 @@
 local lsp = require('lsp-zero')
+local lspConfig = require('lspconfig')
+
 lsp.preset('recommended')
 
 lsp.ensure_installed({
@@ -16,6 +18,27 @@ lsp.configure('sumneko_lua', {
     }
   }
 })
+
+lspConfig["ltex"].setup({
+  settings = {
+    ltex = {
+      language = "en-GB",
+      dictionary = {
+        ['en-GB'] = {"Kolibri", "precomputed", "subproblem" }
+      },
+      additionalRules = {
+        languageModel = '~/ngrams/',
+     },
+    }
+  }
+})
+
+--lsp.configure('ltex-ls', {
+--    ltex = {
+--      enabled = false,
+--      language = "de_CH"
+--    }
+--})
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
