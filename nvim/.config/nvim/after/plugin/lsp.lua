@@ -1,30 +1,50 @@
+vim.lsp.set_log_level("debug")
 local lsp = require('lsp-zero')
-local lspConfig = require('lspconfig')
+local lspconfig = require('lspconfig')
 
-lsp.preset('recommended')
+lsp.preset({
+	sign_icons = {
+    error = '✘',
+    warn = '▲',
+    hint = '⚑',
+    info = '»'
+  },
+  float_border = 'rounded',
+  call_servers = 'local',
+  configure_diagnostics = true,
+  setup_servers_on_start = true,
+  set_lsp_keymaps = {
+    preserve_mappings = false,
+    omit = {},
+  },
+  manage_nvim_cmp = {
+    set_sources = 'recommended',
+    set_basic_mappings = true,
+    set_extra_mappings = false,
+    use_luasnip = true,
+    set_format = true,
+    documentation_window = true,
+  },
+}) -- presets documentation: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#recommended
 
-lsp.ensure_installed({
-  'tsserver',
-	'eslint',
-  'html'
+lsp.skip_server_setup({'eslint', 'ltex'}) -- servers in this list won't be setup automatically. for each of them .setup has to be called individually
+
+lspconfig.eslint.setup({
+  on_attach = function(client, bufnr)
+    -- fix all autofixables on save
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
 })
 
-lsp.configure('sumneko_lua', {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' }
-      }
-    }
-  }
-})
-
-lspConfig["ltex"].setup({
+lspconfig["ltex"].setup({
   settings = {
     ltex = {
       language = "en-GB",
       dictionary = {
-        ['en-GB'] = {"Kolibri", "precomputed", "subproblem" }
+        ['en-GB'] = {"JSDoc", "Kolibri", "precomputed", "subproblem" }
       },
       additionalRules = {
         languageModel = '~/ngrams/',
@@ -33,26 +53,19 @@ lspConfig["ltex"].setup({
   }
 })
 
---lsp.configure('ltex-ls', {
---    ltex = {
---      enabled = false,
---      language = "de_CH"
---    }
---})
-
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
   ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
+  ["<C-Enter>"] = cmp.mapping.complete(),
+  ['<Tab>'] = {
+    i = cmp.config.disable, -- disble tab in insert mode, use <C-p> for that!
+    c = cmp.config.disable
+  },
 })
 
-
-lsp.set_preferences({
-	sign_icons = { }
-})
 
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
@@ -76,7 +89,6 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 
 
-  vim.diagnostic.config({virtual_text = true})
 end)
 
 
