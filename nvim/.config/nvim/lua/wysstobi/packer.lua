@@ -15,6 +15,7 @@ return require('packer').startup(function(use)
 	}
 	-- color scheme
 	use { 'rebelot/kanagawa.nvim' }
+  -- use 'tanvirtin/monokai.nvim'
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}) -- syntax highlighting for different languages
 	use('theprimeagen/harpoon') -- quick access files
@@ -24,6 +25,8 @@ return require('packer').startup(function(use)
   use('ryanoasis/vim-devicons')
 	use('lervag/vimtex')
 
+  use 'nvim-tree/nvim-web-devicons'
+  use 'tpope/vim-commentary'
   use('neovimhaskell/nvim-hs.vim')
 
 	-- adds better lsp support. Uses Mason in background.
@@ -51,8 +54,13 @@ return require('packer').startup(function(use)
   -- statusline
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
+
+  --use { -- tab 
+  --  'romgrk/barbar.nvim',
+  --  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  --}
 
   -- navigation utilities
   use('preservim/nerdtree')
