@@ -2,7 +2,7 @@
 
 desiredSpaceAmount=9
 
-maxTries=3
+maxTries=1
 declare -A apps
 # Code
 apps["iTerm2"]=1
