@@ -116,6 +116,7 @@ alias cdws="cd ~/workspaces"
 alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
 
 alias G="nvim . -c G" # open fugitive in current folder
+alias nv="nvim"
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -126,3 +127,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
