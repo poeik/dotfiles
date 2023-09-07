@@ -12,6 +12,7 @@ apps["CLion"]=1
 # utilities
 apps["Google Chrome"]=2
 apps["Notion"]=4
+apps["Obsidian"]=4
 apps["Finder"]=3
 apps["Preview"]=3
 
