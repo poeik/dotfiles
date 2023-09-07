@@ -128,6 +128,3 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
 
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
