@@ -11,14 +11,14 @@ apps["CLion"]=1
 
 # utilities
 apps["Google Chrome"]=2
-apps["Notion"]=4
-apps["Obsidian"]=4
+apps["Notion"]=7
+apps["Obsidian"]=7
 apps["Finder"]=3
 apps["Preview"]=3
 
 # messaging
-apps["Microsoft Outlook"]=8
-apps["Microsoft Teams"]=7
+apps["Microsoft Outlook"]=5
+apps["Microsoft Teams"]=4
 
 start () {
   # just that we do not run in an endless recursion
