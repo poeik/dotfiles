@@ -4,6 +4,7 @@ desiredSpaceAmount=9
 
 maxTries=1
 declare -A apps
+# get windows using yabai -m query --windows | jq
 # Code
 apps["iTerm2"]=1
 apps["IntelliJ IDEA"]=1
@@ -13,6 +14,7 @@ apps["CLion"]=1
 apps["Google Chrome"]=2
 apps["Notion"]=7
 apps["Obsidian"]=7
+apps["Todoist"]=7
 apps["Finder"]=3
 apps["Preview"]=3
 
