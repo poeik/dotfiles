@@ -29,6 +29,9 @@ start () {
     return
   fi
 
+  # get current space to focus back on it later
+  local currentSpace=$(yabai -m query --spaces --space | jq .index)
+
   local displayAmount=$(yabai -m query --displays | jq -c "length")
   if [[ ! ($displayAmount -eq 3 || $displayAmount -eq 1) ]]; then 
     echo "Behaviour for $displayAmount is not defined, exit"
@@ -61,7 +64,7 @@ start () {
     currentTry=$((currentTry + 1))
     start $currentTry
   else
-    yabai -m space --focus 1
+    yabai -m space --focus $currentSpace
   fi
 }
 
