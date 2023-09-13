@@ -14,7 +14,6 @@ apps["CLion"]=1
 apps["Google Chrome"]=2
 apps["Notion"]=7
 apps["Obsidian"]=7
-apps["Todoist"]=7
 apps["Finder"]=3
 apps["Preview"]=3
 
@@ -102,13 +101,15 @@ moveWindowsToCorrectSpaces() {
   for key space in ${(kv)apps}; do
    local idsAsString=$(yabai -m query --windows | jq -c ".[] | select(.app | contains($key)) | .id")
    local idsAsString="${idsAsString//[^0-9]/\n}" 
-   local window_ids=("${(@s/\n/)idsAsString}") #" # this hash is only because of lsp problems
+   local window_ids=("${(@s/\n/)idsAsString}") #"
 
     # echo "$key $window_ids"
     for window_id in "${window_ids[@]}" 
     do
       # move window to space
-      yabai -m window $window_id --space $space
+      if [[ -n $window_id ]]; then
+        yabai -m window $window_id --space $space
+      fi
     done
   done
 }
