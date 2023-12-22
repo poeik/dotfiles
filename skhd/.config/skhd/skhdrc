@@ -1,4 +1,3 @@
-ctrl - space : osascript ~/.local/bin/new-iterm-window.scpt
 alt + cmd - space : open ~
 
 # ----- YABAI bindings ------
