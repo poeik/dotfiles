@@ -4,3 +4,5 @@
 	email = towyss@gmail.com
 [core]
 	excludesfile = ~/.gitignore
+[alias]
+	pushf = push --force-with-lease
