@@ -30,14 +30,12 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 
--- switch tabs
-vim.keymap.set('n', '±', '1gt', opts)
-vim.keymap.set('n', '“', '2gt', opts)
-vim.keymap.set('n', '#', '3gt', opts)
-vim.keymap.set('n', 'Ç', '4gt', opts)
-vim.keymap.set('n', '[', '5gt', opts)
-vim.keymap.set('n', ']', '6gt', opts)
-vim.keymap.set('n', '|', '7gt', opts)
-vim.keymap.set('n', '{', '8gt', opts)
-vim.keymap.set('n', '}', '9gt', opts)
-vim.keymap.set('n', '≠', '0gt', opts)
+-- copy path of current file
+-- relative path  (src/foo.txt)
+vim.keymap.set("n", "<leader>cf", [[<cmd>silent let @*=expand("%:p")<CR>]])
+
+-- filename       (foo.txt)
+vim.keymap.set("n", "<leader>cF", [[<cmd>silent let @*=expand("%:t")<CR>]])
+
+-- directory name (/something/src)
+vim.keymap.set("n", "<leader>ch", [[<cmd>silent let @*=expand("%:p:h")<CR>]])

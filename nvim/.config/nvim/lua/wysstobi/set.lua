@@ -35,6 +35,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- vertical git diff split by default
+vim.opt.diffopt:append("vertical")
 
 vim.diagnostic.config({
   virtual_text = true, -- inline errors

@@ -14,8 +14,10 @@ return require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 	-- color scheme
+  --
+  use { "folke/tokyonight.nvim"}
+  use { "derekelkins/agda-vim"}
 	use { 'rebelot/kanagawa.nvim' }
-  -- use 'tanvirtin/monokai.nvim'
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}) -- syntax highlighting for different languages
 	use('theprimeagen/harpoon') -- quick access files
@@ -56,11 +58,6 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
-
-  --use { -- tab 
-  --  'romgrk/barbar.nvim',
-  --  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-  --}
 
   -- navigation utilities
   use('preservim/nerdtree')

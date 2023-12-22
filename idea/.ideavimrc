@@ -21,16 +21,12 @@ Plug 'tpope/vim-commentary'
 " mapping
 
 " enable line reordering with capital "j" & "k" in visual mode
-" not working for some reason ...
-" vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-" vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vnoremap J :m'>+1<CR>gv=gv
 vnoremap K :m'<-2<CR>gv=gv
-" vnoremap J <Action>(MoveLineDown)
-" vnoremap K <Action>(MoveLineUp)
 
 " fuzzy finder
 map <leader>sf :action GotoFile<CR>
+map <leader>pf :action FindInPath<CR>
 "open terminal
 map <leader>t :action ActivateTerminalToolWindow<CR>
 map <leader>ss <Action>(FileStructurePopup)

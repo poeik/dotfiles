@@ -7,8 +7,8 @@ vim.g.vimtex_quickfix_open_on_warning = 0
 -- open quickfix window not automatically
 vim.g.tex_flavor='latex'
 -- show some latex symbols only when on corresponding line
-vim.opt.conceallevel = 1
-vim.g.tex_conceal = 'abdmg'
+--vim.opt.conceallevel = 1
+--vim.g.tex_conceal = 'abdmg'
 
 -- This enables Vim's and neovim's syntax-related features. Without this, some
 -- VimTeX features will not work (see ":help vimtex-requirements" for more
@@ -30,4 +30,4 @@ vim.cmd([[
   augroup END
 ]])
 
-vim.keymap.set({"n", "v"}, "<localleader>c", [[:! rm -rf build & find . -name "*.aux" -delete<CR>]])
+vim.keymap.set({"n", "v"}, "<localleader>cl", [[:! rm -rf build & find . -name "*.aux" -delete<CR>]])

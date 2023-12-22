@@ -7,11 +7,13 @@ declare -A apps
 # get windows using yabai -m query --windows | jq
 # Code
 apps["iTerm2"]=1
+apps["Alacritty"]=1
 apps["IntelliJ IDEA"]=1
 apps["CLion"]=1
 
 # utilities
 apps["Google Chrome"]=2
+apps["Spotify"]=6
 apps["Notion"]=7
 apps["Obsidian"]=7
 apps["Finder"]=3
