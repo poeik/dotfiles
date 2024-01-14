@@ -19,10 +19,6 @@ _Note2:_ use `stow --delete` to remove the generated symlinks
 
 ## Neovim setup
 
-- Install [packer.nvim](https://github.com/wbthomason/packer.nvim?tab=readme-ov-file#quickstart)
-- Open [packer.lua](nvim/.config/nvim/lua/wysstobi/packer.lua) in `nvim` and
-  source it using `:so %`
-- Execute `:PackerSync` to install all plugins
 - Install `ripgrep` and `fd` using `brew install ripgrep fd` for telescope to work
 
 ## Other important tools

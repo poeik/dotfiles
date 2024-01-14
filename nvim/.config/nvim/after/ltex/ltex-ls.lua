@@ -1,4 +1,4 @@
- --- BEFORE USING, change language entries to fit your needs.
+ -- this is not directly linked to a plugin, therefore it is located in after
 
 local lspconfig = require'lspconfig'
 local configs = require'lspconfig/configs'
