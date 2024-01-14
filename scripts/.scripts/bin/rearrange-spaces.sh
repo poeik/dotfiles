@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-desiredSpaceAmount=9
+# the index is the amount of attached displays, the value the amount of spaces 
+# per display
+declare -A spaceAmount
+spaceAmount[1]=6
+spaceAmount[2]=3
+spaceAmount[3]=3
 
 maxTries=1
 declare -A apps
@@ -14,14 +19,15 @@ apps["CLion"]=1
 # utilities
 apps["Google Chrome"]=2
 apps["Spotify"]=6
-apps["Notion"]=7
-apps["Obsidian"]=7
+apps["Notion"]=6
+apps["Obsidian"]=6
 apps["Finder"]=3
 apps["Preview"]=3
 
 # messaging
 apps["Microsoft Outlook"]=5
 apps["Microsoft Teams"]=4
+apps["Slack"]=4
 
 start () {
   # just that we do not run in an endless recursion
@@ -35,13 +41,13 @@ start () {
   local currentSpace=$(yabai -m query --spaces --space | jq .index)
 
   local displayAmount=$(yabai -m query --displays | jq -c "length")
-  if [[ ! ($displayAmount -eq 3 || $displayAmount -eq 1) ]]; then 
+  if [[ ! ($displayAmount -eq 1 || $displayAmount -eq 2 || $displayAmount -eq 3) ]]; then 
     echo "Behaviour for $displayAmount is not defined, exit"
     return 0
   fi
   echo "Currently are $displayAmount display attached."
 
-  local spacesPerDisplay=$((desiredSpaceAmount / displayAmount))
+  local spacesPerDisplay=${spaceAmount[$displayAmount]}
 
   for i in {1..$displayAmount}
   do
@@ -122,7 +128,7 @@ moveWindowsToCorrectSpaces() {
 checkEverythingIsOk() {
   # currently only the maount of spaces per display is checked
   local displayAmount=$(yabai -m query --displays | jq -c "length")
-  local spacesPerDisplay=$((desiredSpaceAmount / displayAmount))
+  local spacesPerDisplay=${spaceAmount[$displayAmount]}
   local everythingOk=0
 
   for i in {1..$displayAmount}

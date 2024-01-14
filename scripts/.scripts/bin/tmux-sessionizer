@@ -10,6 +10,7 @@ directories=(
   $(find ~/workspaces/obsidian         -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/bsc/sem6/woweb   -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces                  -mindepth 0 -maxdepth 0 -type d)
+  $(find ~/workspaces/unic             -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/adventOfCode     -mindepth 0 -maxdepth 0 -type d)
   $(find ~/                            -mindepth 0 -maxdepth 0 -type d)
   # mse
