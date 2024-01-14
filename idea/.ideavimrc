@@ -1,5 +1,6 @@
 let mapleader=" "
 
+" intelliJ actionlist: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 "" Source your .vimrc
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
@@ -20,13 +21,15 @@ Plug 'tpope/vim-commentary'
 
 " mapping
 
+map <leader>2 :action GotoNextError<CR>
+
 " enable line reordering with capital "j" & "k" in visual mode
 vnoremap J :m'>+1<CR>gv=gv
 vnoremap K :m'<-2<CR>gv=gv
 
 " fuzzy finder
 map <leader>sf :action GotoFile<CR>
-map <leader>pf :action FindInPath<CR>
+map <leader>pf :action SelectIn<CR>
 "open terminal
 map <leader>t :action ActivateTerminalToolWindow<CR>
 map <leader>ss <Action>(FileStructurePopup)
@@ -34,6 +37,8 @@ map <leader>ss <Action>(FileStructurePopup)
 map <leader>pv :NERDTreeFocus<CR>
 map <leader>pt :NERDTreeToggle<CR>
 
+
+map gr :action FindUsages<CR>
 " keep selection when indenting
 vnoremap < <gv
 vnoremap > >gv
