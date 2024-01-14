@@ -1,3 +1,4 @@
+
 local lsp = require('lsp-zero')
 local lspconfig = require('lspconfig')
 
@@ -25,6 +26,69 @@ lsp.preset({
     documentation_window = true,
   },
 }) -- presets documentation: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#recommended
+
+
+
+-- commands defined in on_attach are only available when lsp is running on that buffer
+-- with that, default vim LST will be used if lst-zero is not available for a file.
+lsp.on_attach(function(client, bufnr)
+  local opts = {buffer = bufnr, remap = false}
+
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
+  vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+  vim.keymap.set("n", "<leader>2", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "<leader>3", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set({"n", "v"}, "<leader><CR>", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+  -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+
+  vim.keymap.set('n', '<leader>gd', function()
+    vim.cmd('wincmd v')
+    vim.lsp.buf.definition()
+  end, { noremap=true, silent=true })
+end)
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {'tsserver', 'rust_analyzer'},
+  handlers = {
+    lsp.default_setup,
+    lua_ls = function()
+      local lua_opts = lsp_zero.nvim_lua_ls()
+      require('lspconfig').lua_ls.setup(lua_opts)
+    end,
+  }
+})
+
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
+cmp.setup({
+  sources = {
+    {name = 'path'},
+    {name = 'nvim_lsp'},
+    {name = 'nvim_lua'},
+    {name = 'luasnip', keyword_length = 2},
+    {name = 'buffer', keyword_length = 3},
+  },
+  formatting = lsp.cmp_format(),
+  mapping = cmp.mapping.preset.insert({
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+    ["<C-Enter>"] = cmp.mapping.complete(),
+    ['<Tab>'] = {
+      i = cmp.config.disable, -- disble tab in insert mode, use <C-p> for that!
+      c = cmp.config.disable
+    },
+  })
+})
 
 lsp.skip_server_setup({'eslint', 'ltex'}) -- servers in this list won't be setup automatically. for each of them .setup has to be called individually
 
@@ -86,46 +150,3 @@ lspconfig["ltex"].setup({
   }
 })
 
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ['<Enter>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Enter>"] = cmp.mapping.complete(),
-  ['<Tab>'] = {
-    i = cmp.config.disable, -- disble tab in insert mode, use <C-p> for that!
-    c = cmp.config.disable
-  },
-})
-
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
--- commands defined in on_attach are only available when lsp is running on that buffer
--- with that, default vim LST will be used if lst-zero is not available for a file.
-lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
-
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-  vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-  vim.keymap.set("n", "<leader>2", vim.diagnostic.goto_next, opts)
-  vim.keymap.set("n", "<leader>3", vim.diagnostic.goto_prev, opts)
-  vim.keymap.set({"n", "v"}, "<leader><CR>", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-  vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-  -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-
-  vim.keymap.set('n', '<leader>gd', function()
-    vim.cmd('wincmd v')
-    vim.lsp.buf.definition()
-  end, { noremap=true, silent=true })
-end)
-
-lsp.setup()
