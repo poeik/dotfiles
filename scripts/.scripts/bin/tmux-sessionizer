@@ -11,7 +11,8 @@ directories=(
   $(find ~/workspaces/bsc/sem6/woweb   -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces                  -mindepth 0 -maxdepth 0 -type d)
   $(find ~/workspaces/unic             -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/adventOfCode     -mindepth 0 -maxdepth 0 -type d)
+  $(find ~/workspaces/foto-ch          -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/workspaces/forum-g          -mindepth 1 -maxdepth 1 -type d)
   $(find ~/                            -mindepth 0 -maxdepth 0 -type d)
   # mse
   $(find ~/workspaces/mse/tsm_itsec    -mindepth 1 -maxdepth 1 -type d)
