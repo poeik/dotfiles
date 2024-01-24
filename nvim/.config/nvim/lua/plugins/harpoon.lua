@@ -1,5 +1,7 @@
 return {
   "theprimeagen/harpoon",
+  branch = "harpoon2",
+  dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     -- add files to harpoon and quick access them
     -- when harpoon has been opened using ctrl+e files can be manipulated as if it were a normal file opened in vim
