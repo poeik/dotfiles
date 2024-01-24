@@ -1,5 +1,4 @@
  -- this is not directly linked to a plugin, therefore it is located in after
-
 local lspconfig = require'lspconfig'
 local configs = require'lspconfig/configs'
 local util = require 'lspconfig/util'
