@@ -18,7 +18,6 @@ apps["CLion"]=1
 
 # utilities
 apps["Google Chrome"]=2
-apps["Spotify"]=6
 apps["Notion"]=6
 apps["Obsidian"]=6
 apps["Finder"]=3
@@ -28,6 +27,7 @@ apps["Preview"]=3
 apps["Microsoft Outlook"]=5
 apps["Microsoft Teams"]=4
 apps["Slack"]=4
+apps["Spotify"]=4
 
 start () {
   # just that we do not run in an endless recursion
