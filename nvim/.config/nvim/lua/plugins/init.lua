@@ -6,6 +6,6 @@ return {
   -- commentary keyboard shortcuts
   "tpope/vim-commentary",
 
-  -- "ryanoasis/vim-devicons",
-  'nvim-tree/nvim-web-devicons' -- for telescope file icons
+  'nvim-tree/nvim-web-devicons', -- for telescope file icons
+  { "ryanoasis/vim-devicons", priority = 100 } -- for nerdtree file icons, load it first
 }
