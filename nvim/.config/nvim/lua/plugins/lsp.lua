@@ -1,7 +1,5 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
-  config = function ()
-  end,
   dependencies = {
   		-- LSP Support
       'neovim/nvim-lspconfig',
@@ -53,7 +51,7 @@ return {
 
 
     -- commands defined in on_attach are only available when lsp is running on that buffer
-    -- with that, default vim LST will be used if lst-zero is not available for a file.
+    -- with that, default vim LSP will be used if lst-zero is not available for a file.
     lsp.on_attach(function(client, bufnr)
       local opts = {buffer = bufnr, remap = false}
 
@@ -81,10 +79,10 @@ return {
       ensure_installed = {'tsserver', 'rust_analyzer'},
       handlers = {
         lsp.default_setup,
-        lua_ls = function()
-          local lua_opts = lsp_zero.nvim_lua_ls()
-          require('lspconfig').lua_ls.setup(lua_opts)
-        end,
+        -- lua_ls = function()
+        --   local lua_opts = lsp_zero.nvim_lua_ls()
+        --   require('lspconfig').lua_ls.setup(lua_opts)
+        -- end,
       }
     })
 
@@ -112,8 +110,6 @@ return {
         },
       })
     })
-
-    lsp.skip_server_setup({'eslint', 'ltex'}) -- servers in this list won't be setup automatically. for each of them .setup has to be called individually
 
     lspconfig.eslint.setup({
       on_attach = function(client, bufnr)
