@@ -58,7 +58,7 @@ yabai -m rule --add app="^Todoist$" title="^Todoist$" manage=off # Todoist add n
 
 
 # react to signals
-yabai -m signal --add event=display_added action="zsh ~/.local/bin/rearrange-spaces.sh"
-yabai -m signal --add event=display_removed action="zsh ~/.local/bin/rearrange-spaces.sh"
+yabai -m signal --add event=display_added action="zsh ~/.scripts/bin/rearrange-spaces.sh"
+yabai -m signal --add event=display_removed action="zsh ~/.scripts/bin/rearrange-spaces.sh"
 
 echo "yabai configuration loaded.."
