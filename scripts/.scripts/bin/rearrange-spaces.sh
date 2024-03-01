@@ -3,8 +3,8 @@
 # the index is the amount of attached displays, the value the amount of spaces 
 # per display
 declare -A spaceAmount
-spaceAmount[1]=6
-spaceAmount[2]=3
+spaceAmount[1]=9
+spaceAmount[2]=4
 spaceAmount[3]=3
 
 maxTries=1
@@ -18,16 +18,16 @@ apps["CLion"]=1
 
 # utilities
 apps["Google Chrome"]=2
-apps["Notion"]=6
-apps["Obsidian"]=6
+apps["Notion"]=7
+apps["Obsidian"]=7
 apps["Finder"]=3
 apps["Preview"]=3
+apps["Spotify"]=6
 
 # messaging
-apps["Microsoft Outlook"]=5
-apps["Microsoft Teams"]=4
-apps["Slack"]=4
-apps["Spotify"]=4
+apps["Microsoft Outlook"]=4
+apps["Microsoft Teams"]=5
+apps["Slack"]=5
 
 start () {
   # just that we do not run in an endless recursion
