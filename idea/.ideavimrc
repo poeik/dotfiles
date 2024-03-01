@@ -1,6 +1,6 @@
 let mapleader=" "
 
-" intelliJ actionlist: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
+" intelliJ action list: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d (or :actionlist)
 "" Source your .vimrc
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
@@ -29,7 +29,8 @@ vnoremap K :m'<-2<CR>gv=gv
 
 " fuzzy finder
 map <leader>sf :action GotoFile<CR>
-map <leader>pf :action SelectIn<CR>
+map <leader>sg :action FindInPath<CR>
+map <leader>pf :action SelectInProjectView<CR>
 "open terminal
 map <leader>t :action ActivateTerminalToolWindow<CR>
 map <leader>ss <Action>(FileStructurePopup)
@@ -49,7 +50,7 @@ nmap <C-d> <C-d>zz
 nmap <C-u> <C-u>zz
 
 
-nmap <leader><CR>
+nmap <leader><CR> :action ShowIntentionActions<CR>
 
 " search terms stay in the middle
 nmap n nzzzv
@@ -70,7 +71,6 @@ nmap <leader>8 <Action>(ToggleLineBreakpoint)
 " Map <leader>d to start debug
 map <leader>d <Action>(Debug)
 map <leader>g <Action>(Run)
-map <leader>c <Action>(Stop)
 map <leader>c <Action>(Stop)
 
 map <leader>vd <Action>(ShowErrorDescription)
