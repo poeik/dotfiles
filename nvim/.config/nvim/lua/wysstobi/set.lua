@@ -41,3 +41,5 @@ vim.opt.diffopt:append("vertical")
 vim.diagnostic.config({
   virtual_text = true, -- inline errors
 })
+-- needed for tree-sitter-purescript and languageserver
+vim.filetype.add({ extension = { purs = 'purescript' }})

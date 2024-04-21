@@ -4,15 +4,15 @@ return {
   config = function()
     require('nvim-treesitter.configs').setup {
       -- A list of parser names, or "all"
-      ensure_installed = { "kotlin", "java", "javascript", "typescript", "c", "lua", "rust", "elm" }, -- langugages are syntax highlighted
-    
+      ensure_installed = { "kotlin", "java", "javascript", "typescript", "lua" }, -- langugages are syntax highlighted
+
       -- Install parsers synchronously (only applied to `ensure_installed`)
       sync_install = false,
-    
+
       -- Automatically install missing parsers when entering buffer
       -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
       auto_install = true,
-    
+
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -22,7 +22,7 @@ return {
           node_decremental = '<c-backspace>',
         }
       },
-    
+
       highlight = {
         -- `false` will disable the whole extension
         enable = true,
