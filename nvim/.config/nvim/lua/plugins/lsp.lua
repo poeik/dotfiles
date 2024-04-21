@@ -76,14 +76,21 @@ return {
 
     require('mason').setup({})
     require('mason-lspconfig').setup({
-      ensure_installed = {'tsserver', 'rust_analyzer'},
+      ensure_installed = {'tsserver'},
       handlers = {
         lsp.default_setup,
-        -- lua_ls = function()
-        --   local lua_opts = lsp_zero.nvim_lua_ls()
-        --   require('lspconfig').lua_ls.setup(lua_opts)
-        -- end,
       }
+    })
+
+    lspconfig.lua_ls.setup({
+      settings = {
+        Lua = {
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = {'vim'},
+          },
+        },
+      },
     })
 
     local cmp = require('cmp')
@@ -158,7 +165,7 @@ return {
     lspconfig["ltex"].setup({
       settings = {
         ltex = {
-          language = "en-GB",
+          language = "en-US",
           dictionary = {
             ['en-GB'] = {"JSDoc", "Kolibri", "precomputed", "subproblem" }
           },
