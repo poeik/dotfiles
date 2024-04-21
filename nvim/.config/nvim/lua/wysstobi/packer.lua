@@ -2,9 +2,9 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
-
-return require('packer').startup(function(use)
+-- vim.cmd [[packadd packer.nvim]]
+-- 
+-- return require('packer').startup(function(use)
   -- Packer can manage itself
   -- fuzzyfinder
   --use {
@@ -58,7 +58,7 @@ return require('packer').startup(function(use)
 
   -- navigation utilities
   -- use('preservim/nerdtree')
-  use('christoomey/vim-tmux-navigator')
-  use {'stevearc/dressing.nvim'}
-
-end)
+  --   use('christoomey/vim-tmux-navigator')
+  --   use {'stevearc/dressing.nvim'}z
+-- 
+-- end)
