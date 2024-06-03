@@ -22,10 +22,10 @@ apps["Notion"]=7
 apps["Obsidian"]=7
 apps["Finder"]=3
 apps["Preview"]=3
-apps["Spotify"]=6
+apps["Spotify"]=4
 
 # messaging
-apps["Microsoft Outlook"]=4
+apps["Microsoft Outlook"]=6
 apps["Microsoft Teams"]=5
 apps["Slack"]=5
 
