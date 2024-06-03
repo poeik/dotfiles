@@ -82,6 +82,53 @@ return {
       }
     })
 
+    lspconfig.purescriptls.setup({
+      -- Your personal on_attach function referenced before to include
+      -- keymaps & other ls options
+      on_attach = function(client, bufnr)
+        -- Stelle sicher, dass Diagnosen bei Textänderung aktualisiert werden
+        client.resolved_capabilities.document_formatting = true
+      end,
+      handlers = {
+        ["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+          -- Aktualisiere Diagnosen sofort bei Textänderungen
+          update_in_insert = true,
+        }
+        ),
+      },
+      settings = {
+        ['helm-ls'] = {
+          logLevel = "info",
+          valuesFiles = {
+            mainValuesFile = "values.yaml",
+            lintOverlayValuesFile = "values.lint.yaml",
+            additionalValuesFilesGlobPattern = "values*.yaml"
+          },
+          yamlls = {
+            enabled = true,
+            diagnosticsLimit = 50,
+            showDiagnosticsDirectly = false,
+            path = "yaml-language-server",
+            config = {
+              schemas = {
+                kubernetes = "templates/**",
+              },
+              completion = true,
+              hover = true,
+              -- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
+            }
+          }
+        },
+        purescript = {
+          addSpagoSources = true -- e.g. any purescript language-server config here
+        }
+      },
+      flags = {
+        debounce_text_changes = 150,
+      }
+    })
+
     lspconfig.lua_ls.setup({
       settings = {
         Lua = {
