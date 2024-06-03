@@ -65,12 +65,13 @@ nmap <Leader>P "+P
 
 " Map \r to the Reformat Code action
 map <leader>l <Action>(ReformatCode)
-map <leader>vrn <Action>(RenameElement)<Esc>l
+map <leader>r <Action>(RenameElement)<Esc>l
 nmap <leader>8 <Action>(ToggleLineBreakpoint)
 
 " Map <leader>d to start debug
 map <leader>d <Action>(Debug)
 map <leader>g <Action>(Run)
+map <leader>G <Action>(RunClass)
 map <leader>c <Action>(Stop)
 
 map <leader>vd <Action>(ShowErrorDescription)
