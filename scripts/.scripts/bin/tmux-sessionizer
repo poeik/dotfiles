@@ -17,6 +17,7 @@ directories=(
   $(find ~/                            -mindepth 0 -maxdepth 0 -type d)
   # mse
   $(find ~/workspaces/mse/cm_acwritpre -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/workspaces/mse/zurihac      -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/mse/tsm_progalg  -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/mse/ftp_machle   -mindepth 0 -maxdepth 0 -type d)
 ) 
