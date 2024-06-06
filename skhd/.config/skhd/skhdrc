@@ -8,34 +8,34 @@ ctrl + alt + cmd - r: zsh /Users/wysstobi/.scripts/bin/rearrange-spaces.sh
 # focus window
 # alt - j : yabai -m window --focus prev || yabai -m window --focus last
 # alt - k : yabai -m window --focus next || yabai -m window --focus first
-ctrl - h : yabai -m window --focus west || yabai -m display --focus west
-ctrl - l : yabai -m window --focus east || yabai -m display --focus east
-ctrl - j : yabai -m window --focus south 
-ctrl - k : yabai -m window --focus north 
+alt - h : yabai -m window --focus west || yabai -m display --focus west
+alt - l : yabai -m window --focus east || yabai -m display --focus east
+alt - j : yabai -m window --focus south 
+alt - k : yabai -m window --focus north 
 
 # swap managed window
-shift + ctrl - h : yabai -m window --warp west || (yabai -m window --display west; yabai -m display --focus west)
-shift + ctrl - l : yabai -m window --warp east || (yabai -m window --display east; yabai -m display --focus east)
-shift + ctrl - j : yabai -m window --warp south
-shift + ctrl - k : yabai -m window --warp north
+shift + alt - h : yabai -m window --warp west || (yabai -m window --display west; yabai -m display --focus west)
+shift + alt - l : yabai -m window --warp east || (yabai -m window --display east; yabai -m display --focus east)
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
 
 
 # swap layout
-shift + ctrl - y : yabai -m space --mirror y-axis
-shift + ctrl - x : yabai -m space --mirror x-axis
+shift + alt - y : yabai -m space --mirror y-axis
+shift + alt - x : yabai -m space --mirror x-axis
 
 # toggle window fullscreen zoom
 alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle padding and gap
-shift + ctrl - g : yabai -m space --toggle padding; yabai -m space --toggle gap
+shift + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # float / unfloat window and center on screen
-ctrl - t : yabai -m window --toggle float;\
+alt - t : yabai -m window --toggle float;\
           yabai -m window --grid 4:4:1:1:2:2
 
 # toggle window split type
-ctrl - e : yabai -m window --toggle split
+alt - e : yabai -m window --toggle split
 
 
 # balance size of windows
