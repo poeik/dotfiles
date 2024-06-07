@@ -1,4 +1,7 @@
 live_config_reload = true
+import = [
+   "~/.config/alacritty/alacritty-dark.toml"
+]
 
 [env]
 TERM = "xterm-256color"
@@ -20,7 +23,14 @@ style = "Regular"
 
 [window]
 decorations = "Buttonless"
+opacity = 0.90
 
 [window.padding]
 x = 16
 y = 16
+
+[[keyboard.bindings]]
+key = "Key1"
+mods = "Command"
+action = "IncreaseFontSize"
+

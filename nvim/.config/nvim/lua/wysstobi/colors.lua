@@ -1,42 +1,39 @@
-local colorSchemes = { dark = "kanagawa-dragon", light = "tokyonight-day"}
+local colorSchemes = {
+  dark  = { theme = "catppuccin-mocha", guibg = '#212121' },
+  light = { theme = "catppuccin-latte", guibg = '#BCC0CC' }
+}
+
+local ALACRITTY_CONFIG = "~/.config/alacritty/alacritty.toml"
 
 function SetColorScheme(color)
-	color = color or "dark"
+  local colorScheme = colorSchemes[color]
 
-	vim.cmd.colorscheme(colorSchemes[color])
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  require("catppuccin").setup({
+    transparent_background = true,
+    integrations = {
+      treesitter = true,
+    },
+    custom_highlights = {
+      ColorColumn = { bg = colorScheme.guibg }
+    }
+  })
+
+	vim.cmd.colorscheme(colorScheme["theme"])
 end
 
+local function replaceInConfigFile(searchFor, replaceWith, file)
+  local cmd = string.format("sed -i '' 's/%s/%s/' %s", searchFor, replaceWith, file)
+  os.execute(cmd)
+end
 
-Light = function() SetColorScheme("light") end
-Dark = SetColorScheme
+Light = function()
+  SetColorScheme("light")
+  replaceInConfigFile("alacritty-dark", "alacritty-light", ALACRITTY_CONFIG)
+end
+
+Dark = function()
+  SetColorScheme("dark")
+  replaceInConfigFile("alacritty-light", "alacritty-dark", ALACRITTY_CONFIG)
+end
 
 Dark()
-
-
--- local colorSchemes = { dark = "catppuccin-mocha", light = "catppuccin-latte"}
-
--- require("catppuccin").setup({
---   transparent_background = true,
--- 	-- dim_inactive = {
--- 	-- 	enabled = true,
--- 	-- 	shade = "dark",
--- 	-- 	percentage = 0.15,
--- 	-- },
---   integrations = {
---         treesitter = true,
---   }
--- })
-
--- function SetColorScheme(color)
--- 	color = color or "dark"
--- 	vim.cmd.colorscheme(colorSchemes[color])
--- end
-
-
--- Light = function() SetColorScheme("light") end
--- Dark = SetColorScheme
-
--- Dark()
-

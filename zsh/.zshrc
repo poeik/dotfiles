@@ -117,6 +117,8 @@ alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" 
 
 alias G="nvim . -c G -c only" # open fugitive in current folder
 alias nv="nvim"
+alias light="nvim -c \"lua Light()\" -c \"q\""
+alias dark="nvim -c \"lua Dark()\" -c \"q\""
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -127,4 +129,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
+
+# Light = function()
+#   SetColorScheme("light")
+#   replaceInConfigFile("alacritty-dark", "alacritty-light", ALACRITTY_CONFIG)
+# end
 

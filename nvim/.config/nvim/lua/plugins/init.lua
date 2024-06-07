@@ -5,6 +5,7 @@ return {
   "rebelot/kanagawa.nvim",
   "tpope/vim-commentary",
   "towolf/vim-helm",
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   'nvim-tree/nvim-web-devicons', -- for telescope file icons
 }

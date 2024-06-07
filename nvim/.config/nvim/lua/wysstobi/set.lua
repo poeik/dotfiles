@@ -43,3 +43,8 @@ vim.diagnostic.config({
 })
 -- needed for tree-sitter-purescript and languageserver
 vim.filetype.add({ extension = { purs = 'purescript' }})
+
+
+-- disable default nvim file explorer 
+vim.g.loaded_netrw       = 1
+vim.g.loaded_netrwPlugin = 1
