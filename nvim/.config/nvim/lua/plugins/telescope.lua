@@ -1,3 +1,14 @@
+-- colors every element after two tabs in comment color
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "TelescopeResults",
+	callback = function(ctx)
+		vim.api.nvim_buf_call(ctx.buf, function()
+			vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+			vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
+		end)
+	end,
+})
+
 return {
   'nvim-telescope/telescope.nvim', tag = '0.1.5',
   dependencies = {
@@ -28,24 +39,31 @@ return {
     end
 
 
+    local display_telescope_file = function(_, path)
+          local tail = vim.fs.basename(path)
+	        local parent = vim.fs.dirname(path)
+          return string.format("%s\t\t(%s)", tail, parent)
+    end
+
+
     telescope.setup({
       extensions = {
-        ['ui-select'] = {
-          themes.get_dropdown {
-            -- even more opts
-          }
-        }
+        ['ui-select'] = { themes.get_dropdown {} }
       },
       defaults = {
+        -- Format path as "file.txt (path\to\file\)"              
+        path_display = display_telescope_file,
         file_ignore_patterns = { 'elm-stuff', 'node_modules', '.git' },
         mappings = {
-          i = {
-            ["<C-q>"] = smart_send_to_qflist,  -- für Insert-Modus
-          },
-          n = {
-            ["<C-q>"] = smart_send_to_qflist,  -- für Normal-Modus
-          },
+          i = { ["<C-q>"] = smart_send_to_qflist, },
+          n = { ["<C-q>"] = smart_send_to_qflist, },
         },
+      },
+      pickers = {
+        lsp_references = {
+          jump_type = "vsplit",
+          show_line = false,
+        }
       }
     })
 
