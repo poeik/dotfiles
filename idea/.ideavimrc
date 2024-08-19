@@ -1,3 +1,7 @@
+" plugins
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
+
 let mapleader=" "
 
 " intelliJ action list: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d (or :actionlist)
@@ -7,76 +11,63 @@ let mapleader=" "
 set scrolloff=8
 set relativenumber " disable mit set norelativenumber
 set number
-
-" IntellJ settings
-set NERDTree
-
-" Do incremental searching.
 set incsearch
-
-
-" plugins
-
-Plug 'tpope/vim-commentary'
-
-" mapping
-
-map <leader>2 :action GotoNextError<CR>
 
 " enable line reordering with capital "j" & "k" in visual mode
 vnoremap J :m'>+1<CR>gv=gv
 vnoremap K :m'<-2<CR>gv=gv
 
-" fuzzy finder
-map <leader>sf :action GotoFile<CR>
-map <leader>sg :action FindInPath<CR>
-map <leader>pf :action SelectInProjectView<CR>
-"open terminal
-map <leader>t :action ActivateTerminalToolWindow<CR>
-map <leader>ss <Action>(FileStructurePopup)
-" Nerdtree 
-map <leader>pv :NERDTreeFocus<CR>
-map <leader>pt :NERDTreeToggle<CR>
-
-
-map gr :action FindUsages<CR>
 " keep selection when indenting
 vnoremap < <gv
 vnoremap > >gv
 vnoremap = =gv
 
+" fuzzy finder
+map <leader>sf :action GotoFile<CR>
+map <leader>sg :action FindInPath<CR>
+map <leader>pf :action SelectInProjectView<CR>
+
+" Nerdtree
+map <leader>pv :NERDTreeFocus<CR>
+map <leader>pt :NERDTreeToggle<CR>
+
 " cursor stays in the middle with half page jumps
 nmap <C-d> <C-d>zz
 nmap <C-u> <C-u>zz
-
-
-nmap <leader><CR> :action ShowIntentionActions<CR>
 
 " search terms stay in the middle
 nmap n nzzzv
 nmap N Nzzzv
 
-" replace without adding old text to clipboard
-xmap <Leader>p "_dP
-
 " to/from system clipboard
 vmap <Leader>y "+y
 nmap <Leader>P "+P
 
-" Map \r to the Reformat Code action
+" editor actions
 map <leader>l <Action>(ReformatCode)
-map <leader>r <Action>(RenameElement)<Esc>
-nmap <leader>8 <Action>(ToggleLineBreakpoint)
-
-" Map <leader>d to start debug
-map <leader>d <Action>(Debug)
-map <leader>g <Action>(Run)
-map <leader>G <Action>(RunClass)
-map <leader>c <Action>(Stop)
-
+map <leader>vrn <Action>(RenameElement)<Esc>
+map <leader>8 <Action>(ToggleLineBreakpoint)
 map <leader>vd <Action>(ShowErrorDescription)
+map <leader><CR> :action ShowIntentionActions<CR>
+map <leader>ss <Action>(FileStructurePopup)
+map <leader>2 :action GotoNextError<CR>
+map gr :action FindUsages<CR>
 
+" run/debug
+map <leader>rd <Action>(Debug)
+map <leader>rr <Action>(Run)
+map <leader>rR <Action>(RunClass)
+map <leader>rc <Action>(Stop)
 
-" Git
+" git
 map <leader>gd <Action>(Git.Stage.Compare.Local.Staged)
 map <leader>ga <Action>(Annotate)
+
+" tool windows
+map <leader>tt :action ActivateTerminalToolWindow<CR>
+map <leader>tr :action ActivateRunToolWindow<CR>
+map <leader>tg :action ActivateCommitToolWindow<CR>
+map <leader>tf :action ActivateFindToolWindow<CR>
+
+" Commands
+command! G :action ActivateCommitToolWindow
