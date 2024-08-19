@@ -209,20 +209,7 @@ return {
       handlers = tsHandlers
     })
 
-    lspconfig["ltex"].setup({
-      settings = {
-        ltex = {
-          language = "en-US",
-          dictionary = {
-            ['en-GB'] = {"JSDoc", "Kolibri", "precomputed", "subproblem" }
-          },
-          additionalRules = {
-            languageModel = '~/ngrams/',
-          },
-        }
-      }
-    })
-
-  end
+  end,
+  priority = 1
 }
 
