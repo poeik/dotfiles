@@ -6,6 +6,7 @@ return {
   },
   config = function()
     require("nvim-tree").setup {
+      view = { adaptive_size = true },
       renderer = {
         group_empty = true, -- stack single file folders
       },
