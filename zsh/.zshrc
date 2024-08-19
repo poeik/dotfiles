@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.scripts/bin:/usr/local/bin:$PATH
+export PATH=$HOME/workspaces/mse/.bin:$HOME/.scripts/bin:/usr/local/bin:$PATH
 
 
 # Path to your oh-my-zsh installation.
@@ -110,9 +110,6 @@ export LANG=de_CH.UTF-8
 
 bindkey -s ^f "tmux-sessionizer\n"
 
-alias module="cd ~/Documents/fhnw/active/module"
-alias wsfhnw="cd /Users/wysstobi/workspaces/fhnw/active"
-alias cdws="cd ~/workspaces"
 alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
 
 alias G="nvim . -c G -c only" # open fugitive in current folder
@@ -124,14 +121,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
-
-# Light = function()
-#   SetColorScheme("light")
-#   replaceInConfigFile("alacritty-dark", "alacritty-light", ALACRITTY_CONFIG)
-# end
-
