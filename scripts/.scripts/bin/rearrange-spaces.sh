@@ -2,32 +2,43 @@
 
 # the index is the amount of attached displays, the value the amount of spaces 
 # per display
-declare -A spaceAmount
+declare -a spaceAmount
 spaceAmount[1]=9
 spaceAmount[2]=4
 spaceAmount[3]=3
 
 maxTries=1
-declare -A apps
-# get windows using yabai -m query --windows | jq
+
+declare -a apps
+
+# Funktion zum Hinzufügen eines App-Objekts
+configure_app() {
+    local app_name="$1"
+    local title="$2"
+    local desktop="$3"
+    
+    # Speichere die Daten als Array
+    apps+="$app_name,$title,$desktop"
+}
+
 # Code
-apps["iTerm2"]=1
-apps["Alacritty"]=1
-apps["IntelliJ IDEA"]=1
-apps["CLion"]=1
+configure_app "Alacritty" "" 1
+configure_app "IntelliJ IDEA" "" 1
 
 # utilities
-apps["Google Chrome"]=2
-apps["Notion"]=7
-apps["Obsidian"]=7
-apps["Finder"]=3
-apps["Preview"]=3
-apps["Spotify"]=4
+configure_app "Google Chrome" "" 2
+configure_app "Notion" "" 7
+configure_app "Obsidian" "" 7
+configure_app "Alacritty" "vault" 7
+configure_app "Alacritty" "_tmp" 3
+configure_app "Finder" "" 3
+configure_app "Preview" "" 3
+configure_app "Spotify" "" 4
 
 # messaging
-apps["Microsoft Outlook"]=6
-apps["Microsoft Teams"]=5
-apps["Slack"]=5
+configure_app "Microsoft Outlook" "" 6
+configure_app "Microsoft Teams" "" 5
+configure_app "Slack" "" 5
 
 start () {
   # just that we do not run in an endless recursion
@@ -108,18 +119,23 @@ focusDisplay() {
 }
 
 moveWindowsToCorrectSpaces() {
-  # Assoziatives Array mit Namen und Space
-  for key space in ${(kv)apps}; do
-   local idsAsString=$(yabai -m query --windows | jq -c ".[] | select(.app | contains($key)) | .id")
-   local idsAsString="${idsAsString//[^0-9]/\n}" 
-   local window_ids=("${(@s/\n/)idsAsString}") #"
+  for config in "${apps[@]}"; do
+    IFS=',' read -r app title desktop <<< "${config}"
+    if [[ -n "$title" ]]; then
+      local idsAsString=$(yabai -m query --windows | jq -c ".[] | select((.app | contains(\"$app\")) and (.title | contains(\"$title\"))) | .id")
+    else
+      local idsAsString=$(yabai -m query --windows | jq -c ".[] | select(.app | contains(\"$app\")) | .id")
+    fi    
 
-    # echo "$key $window_ids"
+    local idsAsString="${idsAsString//[^0-9]/\n}" 
+    local window_ids=("${(@s/\n/)idsAsString}") #"
+
     for window_id in "${window_ids[@]}" 
     do
       # move window to space
       if [[ -n $window_id ]]; then
-        yabai -m window $window_id --space $space
+        # echo "yabai -m window $window_id --space $desktop"
+        yabai -m window $window_id --space $desktop
       fi
     done
   done
