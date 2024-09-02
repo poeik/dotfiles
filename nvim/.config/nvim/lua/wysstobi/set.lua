@@ -48,3 +48,7 @@ vim.filetype.add({ extension = { purs = 'purescript' }})
 -- disable default nvim file explorer 
 vim.g.loaded_netrw       = 1
 vim.g.loaded_netrwPlugin = 1
+
+
+-- used for obsidian-nvim
+vim.opt.conceallevel = 1
