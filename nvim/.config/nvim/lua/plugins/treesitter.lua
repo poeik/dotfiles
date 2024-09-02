@@ -32,7 +32,17 @@ return {
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
-      }
+      },
+      -- filetype_to_parsername = {
+      --   fr = "haskell",  -- Verknüpft den Dateityp 'frege' mit dem Haskell-Parser
+      -- },
     }
+    -- use haskell parser for frege files
+    vim.treesitter.language.register('haskell', 'frege')
+    -- set filetype for all *.fr to "frege" 
+    vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+      pattern = "*.fr",
+      command = "set filetype=frege",
+    })
  end
 }
