@@ -98,28 +98,6 @@ return {
         ),
       },
       settings = {
-        ['helm-ls'] = {
-          logLevel = "info",
-          valuesFiles = {
-            mainValuesFile = "values.yaml",
-            lintOverlayValuesFile = "values.lint.yaml",
-            additionalValuesFilesGlobPattern = "values*.yaml"
-          },
-          yamlls = {
-            enabled = true,
-            diagnosticsLimit = 50,
-            showDiagnosticsDirectly = false,
-            path = "yaml-language-server",
-            config = {
-              schemas = {
-                kubernetes = "templates/**",
-              },
-              completion = true,
-              hover = true,
-              -- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
-            }
-          }
-        },
         purescript = {
           addSpagoSources = true -- e.g. any purescript language-server config here
         }
@@ -208,6 +186,35 @@ return {
     lspconfig.tsserver.setup({
       handlers = tsHandlers
     })
+
+    require('lspconfig.configs').frege_ls = {
+      default_config = {
+        cmd = {"sh", "/Users/wysstobi/workspaces/mse/frege/utils/frege-lsp-server-4.1.3-alpha/bin/frege-lsp-server"},
+        filetypes = {'frege'},
+        root_dir = lspconfig.util.root_pattern("settings.gradle", "build.sbt", "Makefile"),
+        settings = {},
+      },
+      commands = {
+        FregeRun = {
+          function()
+            local cmd = string.format('gradle clean runFrege')
+            -- vim.cmd(string.format('term %s', cmd))
+            local output = vim.fn.system(cmd)
+            vim.api.nvim_echo({{output, "Normal"}}, false, {})
+          end,
+          description = 'Run Frege Code',
+        },
+        FregeRepl = {
+          function()
+            local cmd = string.format('eval $(gradle -q clean replFrege)')
+            vim.cmd(string.format('term %s', cmd))
+          end,
+          description = 'Start Frege REPL',
+        },
+      },
+    }
+    lspconfig.frege_ls.setup {}
+
 
   end,
   priority = 1
