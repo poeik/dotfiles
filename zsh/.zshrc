@@ -109,6 +109,7 @@ export LANG=de_CH.UTF-8
 #
 
 bindkey -s ^f "tmux-sessionizer\n"
+alias t="tmux-sessionizer"
 
 alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
 
@@ -125,3 +126,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
+
