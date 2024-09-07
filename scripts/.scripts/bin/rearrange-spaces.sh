@@ -33,7 +33,7 @@ configure_app "Alacritty" "vault" 7
 configure_app "Alacritty" "_tmp" 3
 configure_app "Finder" "" 3
 configure_app "Preview" "" 3
-configure_app "Spotify" "" 4
+configure_app "Spotify" "" 8
 
 # messaging
 configure_app "Microsoft Outlook" "" 6
