@@ -1,58 +1,29 @@
+-- this file contains lsp server setups for mason-lspconfig
 return {
   "VonHeikemen/lsp-zero.nvim",
+  branch = 'v4.x',
   dependencies = {
-  		-- LSP Support
-      'neovim/nvim-lspconfig',
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+    -- LSP Support
+    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
 
-      -- Autocompletion
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
+    -- Autocompletion
+    'hrsh7th/nvim-cmp',       -- provides general auto completion
+    'hrsh7th/cmp-nvim-lsp',   -- provides auto completion for lsp
+    'hrsh7th/cmp-buffer',     -- autocompletion for buffer words
+    'hrsh7th/cmp-path',       -- autocompletion for file system paths
+    'hrsh7th/cmp-nvim-lua',
 
-      -- Snippets
-      'L3MON4D3/LuaSnip',
-      'rafamadriz/friendly-snippets',
+    -- Snippets
+    'L3MON4D3/LuaSnip',
   },
   config = function()
-
-    local lsp = require('lsp-zero')
+    local lsp_zero = require('lsp-zero')
     local lspconfig = require('lspconfig')
 
-    lsp.preset({
-      sign_icons = {
-        error = '✘',
-        warn = '▲',
-        hint = '⚑',
-        info = '»'
-      },
-      float_border = 'rounded',
-      call_servers = 'local',
-      configure_diagnostics = true,
-      setup_servers_on_start = true,
-      set_lsp_keymaps = {
-        preserve_mappings = false,
-        omit = {},
-      },
-      manage_nvim_cmp = {
-        set_sources = 'recommended',
-        set_basic_mappings = true,
-        set_extra_mappings = false,
-        use_luasnip = true,
-        set_format = true,
-        documentation_window = true,
-      },
-    }) -- presets documentation: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#recommended
-
-
-
-    -- commands defined in on_attach are only available when lsp is running on that buffer
-    -- with that, default vim LSP will be used if lst-zero is not available for a file.
-    lsp.on_attach(function(client, bufnr)
+    ---@diagnostic disable-next-line: unused-local
+    local lsp_attach = function(_client, bufnr)
       local opts = {buffer = bufnr, remap = false}
 
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -66,125 +37,145 @@ return {
       vim.keymap.set({"n", "v"}, "<leader><CR>", vim.lsp.buf.code_action, opts)
       vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
       vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-      -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+      -- vim.keymap.set({"n", "i"}, "<C-i>", vim.lsp.buf.signature_help, opts)
 
       vim.keymap.set('n', '<leader>gd', function()
         vim.cmd('wincmd v')
         vim.lsp.buf.definition()
       end, { noremap=true, silent=true })
-    end)
 
+      lsp_zero.default_keymaps({buffer = bufnr})
+    end
+
+    lsp_zero.extend_lspconfig({
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
+      lsp_attach = lsp_attach,
+      float_border = 'rounded',
+      sign_text = {
+        error = '✘',
+        warn  = '▲',
+        hint  = '⚑',
+        info  = '»',
+      },
+    })
     require('mason').setup({})
-    require('mason-lspconfig').setup({
-      ensure_installed = {'tsserver'},
-      handlers = {
-        lsp.default_setup,
-      }
-    })
 
-    lspconfig.purescriptls.setup({
-      -- Your personal on_attach function referenced before to include
-      -- keymaps & other ls options
-      on_attach = function(client, bufnr)
-        -- Stelle sicher, dass Diagnosen bei Textänderung aktualisiert werden
-        client.resolved_capabilities.document_formatting = true
-      end,
-      handlers = {
-        ["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-          -- Aktualisiere Diagnosen sofort bei Textänderungen
-          update_in_insert = true,
-        }
-        ),
-      },
-      settings = {
-        purescript = {
-          addSpagoSources = true -- e.g. any purescript language-server config here
-        }
-      },
-      flags = {
-        debounce_text_changes = 150,
-      }
-    })
-
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {'vim'},
-          },
+    -- custom lsp setups
+    local purescriptls = function ()
+      lspconfig.purescriptls.setup({
+        -- Your personal on_attach function referenced before to include
+        -- keymaps & other ls options
+        on_attach = function(client, _)
+          -- Stelle sicher, dass Diagnosen bei Textänderung aktualisiert werden
+          client.resolved_capabilities.document_formatting = true
+        end,
+        handlers = {
+          ["textDocument/publishDiagnostics"] = vim.lsp.with(
+          vim.lsp.diagnostic.on_publish_diagnostics, {
+            -- Aktualisiere Diagnosen sofort bei Textänderungen
+            update_in_insert = true,
+          }
+          ),
         },
+        settings = {
+          purescript = {
+            addSpagoSources = true -- e.g. any purescript language-server config here
+          }
+        },
+        flags = {
+          debounce_text_changes = 150,
+        }
+      })
+    end
+
+    local eslint = function ()
+      lspconfig.eslint.setup({
+        on_attach = function(_, bufnr)
+          -- fix all autofixables on save
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+          })
+        end,
+      })
+    end
+
+    local ts_ls = function ()
+        lspconfig.ts_ls.setup({
+          handlers = {
+            -- ts_ls shows always two definitions for react components. this fixes it
+            ["textDocument/definition"] = function(_, result, _)
+              local util = require("vim.lsp.util")
+              if result == nil or vim.tbl_isempty(result) then
+                -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
+                return nil
+              end
+
+              if vim.islist(result) then
+                -- this is opens a buffer to that result
+                -- you could loop the result and choose what you want
+                util.jump_to_location(result[1], "utf-8")
+
+                if #result > 1 then
+                  ---@diagnostic disable-next-line: unused-local
+                  for key, value in pairs(result) do
+                    if string.match(value.targetUri, "react/index.d.ts") then
+                      break
+                    end
+                  end
+                end
+              else
+                util.jump_to_location(result, "utf-8")
+              end
+            end,
+          }
+        })
+      end
+
+      local lua_ls = function()
+        lspconfig.lua_ls.setup({
+          on_init = function(client)
+            lsp_zero.nvim_lua_settings(client, {})
+          end,
+        })
+      end
+
+    require('mason-lspconfig').setup({
+      ensure_installed = {'lua_ls', 'tsserver'},
+      handlers = {
+        function(server_name) lspconfig[server_name].setup({}) end,
+        purescriptls = purescriptls,
+        eslint       = eslint,
+        tsserver     = ts_ls,
+        lua_ls       = lua_ls
       },
     })
 
+     -- auto completion settings
     local cmp = require('cmp')
     local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
+    -- auto completion sources
     cmp.setup({
       sources = {
+        -- see plugin dependencies above
         {name = 'path'},
         {name = 'nvim_lsp'},
         {name = 'nvim_lua'},
         {name = 'luasnip', keyword_length = 2},
         {name = 'buffer', keyword_length = 3},
       },
-      formatting = lsp.cmp_format(),
+      formatting = lsp_zero.cmp_format({}), -- formatting of completion window
       mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         ['<Enter>'] = cmp.mapping.confirm({ select = true }),
-        ["<C-Enter>"] = cmp.mapping.complete(),
         ['<Tab>'] = {
-          i = cmp.config.disable, -- disble tab in insert mode, use <C-p> for that!
+          i = cmp.config.disable, -- disble tab in insert mode, use <C-n> for that!
           c = cmp.config.disable
         },
       })
-    })
-
-    lspconfig.eslint.setup({
-      on_attach = function(client, bufnr)
-        -- fix all autofixables on save
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          command = "EslintFixAll",
-        })
-      end,
-    })
-
-    -- tsserver shows always two definitions for react components. this fixes it
-    local tsHandlers = {
-      ["textDocument/definition"] = function(_, result, params)
-        local util = require("vim.lsp.util")
-        if result == nil or vim.tbl_isempty(result) then
-          -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
-          return nil
-        end
-
-        if vim.tbl_islist(result) then
-          -- this is opens a buffer to that result
-          -- you could loop the result and choose what you want
-          util.jump_to_location(result[1], "utf-8")
-
-          if #result > 1 then
-            local isReactDTs = false
-            ---@diagnostic disable-next-line: unused-local
-            for key, value in pairs(result) do
-              if string.match(value.targetUri, "react/index.d.ts") then
-                isReactDTs = true
-                break
-              end
-            end
-          end
-        else
-          util.jump_to_location(result, "utf-8")
-        end
-      end,
-    }
-
-    lspconfig.tsserver.setup({
-      handlers = tsHandlers
     })
 
     require('lspconfig.configs').frege_ls = {
@@ -214,8 +205,6 @@ return {
       },
     }
     lspconfig.frege_ls.setup {}
-
-
   end,
   priority = 1
 }
