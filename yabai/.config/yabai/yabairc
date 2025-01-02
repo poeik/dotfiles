@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
 sudo yabai --load-sa
 
 # global settings
@@ -28,13 +29,11 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  3
-yabai -m config bottom_padding               3
-yabai -m config left_padding                 3
-yabai -m config right_padding                3
-yabai -m config window_gap                   3
-# NOTE: for OBS floating head
-# yabai -m config left_padding                 450
+yabai -m config top_padding                  6
+yabai -m config bottom_padding               6
+yabai -m config left_padding                 6
+yabai -m config right_padding                6
+yabai -m config window_gap                   6
 
 # apps to not manage (ignore)
 yabai -m rule --add app="^System Settings$" manage=off
@@ -60,5 +59,14 @@ yabai -m rule --add app="^Todoist$" title="^Todoist$" manage=off # Todoist add n
 # react to signals
 yabai -m signal --add event=display_added action="zsh ~/.scripts/bin/rearrange-spaces.sh"
 yabai -m signal --add event=display_removed action="zsh ~/.scripts/bin/rearrange-spaces.sh"
+
+# ensure a selected window, when another window has been closed
+yabai -m signal --add event=window_destroyed action="~/.scripts/bin/focus-window-if-none-focused.sh"
+
+# ## focus window after active space changes
+# yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# ## focus window after active display changes
+# yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
 
 echo "yabai configuration loaded.."
