@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/workspaces/mse/.bin:$HOME/.scripts/bin:/usr/local/bin:$PATH
 
+# coursier
+export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -127,3 +129,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 [ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
 
+# source unic configs
+source ~/.scripts/bin/unic/unic-setup.sh
