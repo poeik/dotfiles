@@ -8,5 +8,13 @@ return {
         vim.opt_local.commentstring = "-- %s"
       end,
     })
+
+    -- define how to comment typst files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "typst",
+      callback = function()
+        vim.opt_local.commentstring = "// %s"
+      end,
+    })
   end
 }
