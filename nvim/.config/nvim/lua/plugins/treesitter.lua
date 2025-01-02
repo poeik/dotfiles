@@ -3,6 +3,8 @@ return {
   build = ':TSUpdate',
   config = function()
     require('nvim-treesitter.configs').setup {
+      modules ={},
+      ignore_install = {},
       -- A list of parser names, or "all"
       ensure_installed = { "kotlin", "java", "javascript", "typescript", "lua" }, -- langugages are syntax highlighted
 
@@ -43,6 +45,13 @@ return {
     vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
       pattern = "*.fr",
       command = "set filetype=frege",
+    })
+    -- define how to comment frege files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "frege",
+      callback = function()
+        vim.opt_local.commentstring = "-- %s"
+      end,
     })
  end
 }

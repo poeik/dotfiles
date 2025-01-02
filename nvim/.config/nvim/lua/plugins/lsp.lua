@@ -182,7 +182,7 @@ return {
       default_config = {
         cmd = {"sh", "/Users/wysstobi/workspaces/mse/frege/utils/frege-lsp-server-4.1.3-alpha/bin/frege-lsp-server"},
         filetypes = {'frege'},
-        root_dir = lspconfig.util.root_pattern("settings.gradle"),
+        root_dir = lspconfig.util.root_pattern("settings.gradle", "build.sbt", "Makefile"),
         settings = {},
       },
       commands = {
