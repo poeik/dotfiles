@@ -55,8 +55,13 @@ return {
         path_display = display_telescope_file,
         file_ignore_patterns = { 'elm-stuff', 'node_modules', '.git' },
         mappings = {
-          i = { ["<C-q>"] = smart_send_to_qflist, },
-          n = { ["<C-q>"] = smart_send_to_qflist, },
+          i = {
+                ["<C-q>"] = smart_send_to_qflist,
+                ["<C-w>"] = "which_key"
+          },
+          n = {
+                ["<C-q>"] = smart_send_to_qflist,
+          },
         },
       },
       pickers = {
