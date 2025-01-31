@@ -35,6 +35,9 @@ vim.opt.colorcolumn = "80"
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+vim.opt.spell = true
+vim.opt.spelllang = "en,de_ch" -- https://ftp.nluug.nl/vim/runtime/spell/
+
 -- vertical git diff split by default
 vim.opt.diffopt:append("vertical")
 
@@ -52,3 +55,4 @@ vim.g.loaded_netrwPlugin = 1
 
 -- used for obsidian-nvim
 vim.opt.conceallevel = 1
+
