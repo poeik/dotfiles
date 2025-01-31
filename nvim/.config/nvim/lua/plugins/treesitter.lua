@@ -6,7 +6,7 @@ return {
       modules ={},
       ignore_install = {},
       -- A list of parser names, or "all"
-      ensure_installed = { "kotlin", "java", "javascript", "typescript", "lua" }, -- langugages are syntax highlighted
+      ensure_installed = { "kotlin", "java", "javascript", "typescript", "lua" }, -- languages are syntax highlighted
 
       -- Install parsers synchronously (only applied to `ensure_installed`)
       sync_install = false,
@@ -28,20 +28,17 @@ return {
       highlight = {
         -- `false` will disable the whole extension
         enable = true,
-        disable = { "latex" },
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
       },
-      -- filetype_to_parsername = {
-      --   fr = "haskell",  -- Verknüpft den Dateityp 'frege' mit dem Haskell-Parser
-      -- },
     }
-    -- use haskell parser for frege files
+
+    -- use Haskell parser for Frege files
     vim.treesitter.language.register('haskell', 'frege')
-    -- set filetype for all *.fr to "frege" 
+    -- set file type for all *.fr to "Frege" 
     vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
       pattern = "*.fr",
       command = "set filetype=frege",
