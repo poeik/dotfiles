@@ -47,16 +47,16 @@ ctrl + shift + cmd - k : yabai -m window south --resize top:0:-40 2> /dev/null |
 ctrl + shift + cmd - l : yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0
 
 # move window and focus desktop
-shift + ctrl - 1 : yabai -m window --space 1; yabai -m space --focus 1
-shift + ctrl - 2 : yabai -m window --space 2; yabai -m space --focus 2
-shift + ctrl - 3 : yabai -m window --space 3; yabai -m space --focus 3
-shift + ctrl - 4 : yabai -m window --space 4; yabai -m space --focus 4
-shift + ctrl - 5 : yabai -m window --space 5; yabai -m space --focus 5
-shift + ctrl - 6 : yabai -m window --space 6; yabai -m space --focus 6
-shift + ctrl - 7 : yabai -m window --space 7; yabai -m space --focus 7
-shift + ctrl - 8 : yabai -m window --space 8; yabai -m space --focus 8
-shift + ctrl - 9 : yabai -m window --space 9; yabai -m space --focus 9
-
+# window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 1 yabai -m window --focus $window_id
+shift + ctrl - 1 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 1; yabai -m space --focus 1; yabai -m window --focus $window_id
+shift + ctrl - 2 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 2; yabai -m space --focus 2; yabai -m window --focus $window_id
+shift + ctrl - 3 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 3; yabai -m space --focus 3; yabai -m window --focus $window_id
+shift + ctrl - 4 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 4; yabai -m space --focus 4; yabai -m window --focus $window_id
+shift + ctrl - 5 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 5; yabai -m space --focus 5; yabai -m window --focus $window_id
+shift + ctrl - 6 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 6; yabai -m space --focus 6; yabai -m window --focus $window_id
+shift + ctrl - 7 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 7; yabai -m space --focus 7; yabai -m window --focus $window_id
+shift + ctrl - 8 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 8; yabai -m space --focus 8; yabai -m window --focus $window_id
+shift + ctrl - 9 : window_id=$(yabai -m query --windows --window | jq -re '.id'); yabai -m window --space 9; yabai -m space --focus 9; yabai -m window --focus $window_id
 
 ctrl - 1 : yabai -m space --focus 1
 ctrl - 2 : yabai -m space --focus 2
