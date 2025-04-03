@@ -131,3 +131,24 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # source unic configs
 source ~/.scripts/bin/unic/unic-setup.sh
+
+# fzf magic
+export FZF_DEFAULT_OPTS='--height=80% --layout=reverse --info=inline --border --margin=1 --padding=1'
+# search the history
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+# search and kill a process
+fkill() {
+    local pid
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi
+}
