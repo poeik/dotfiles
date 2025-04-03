@@ -27,6 +27,8 @@ configure_app "IntelliJ IDEA" "" 1
 
 # utilities
 configure_app "Google Chrome" "" 2
+configure_app "Brave Browser" "" 2
+configure_app "Brave Browser" "Typst Preview - Brave - MSE" 1
 configure_app "Notion" "" 7
 configure_app "Obsidian" "" 7
 configure_app "Alacritty" "vault" 7
