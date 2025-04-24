@@ -1,4 +1,4 @@
--- this file contains LSP server setups for mason-lspconfig
+-- this file contains lsp server setups for mason-lspconfig
 return {
   "VonHeikemen/lsp-zero.nvim",
   branch = 'v4.x',
@@ -60,7 +60,7 @@ return {
     })
     require('mason').setup({})
 
-    -- custom LSP setups
+    -- custom lsp setups
     local purescriptls = function ()
       lspconfig.purescriptls.setup({
         -- Your personal on_attach function referenced before to include
@@ -101,107 +101,57 @@ return {
     end
 
     local ts_ls = function ()
-      lspconfig.ts_ls.setup({
-        handlers = {
-          -- ts_ls shows always two definitions for react components. this fixes it
-          ["textDocument/definition"] = function(_, result, _)
-            local util = require("vim.lsp.util")
-            if result == nil or vim.tbl_isempty(result) then
-              -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
-              return nil
-            end
+        lspconfig.ts_ls.setup({
+          handlers = {
+            -- ts_ls shows always two definitions for react components. this fixes it
+            ["textDocument/definition"] = function(_, result, _)
+              local util = require("vim.lsp.util")
+              if result == nil or vim.tbl_isempty(result) then
+                -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
+                return nil
+              end
 
-            if vim.islist(result) then
-              -- this is opens a buffer to that result
-              -- you could loop the result and choose what you want
-              util.jump_to_location(result[1], "utf-8")
+              if vim.islist(result) then
+                -- this is opens a buffer to that result
+                -- you could loop the result and choose what you want
+                util.jump_to_location(result[1], "utf-8")
 
-              if #result > 1 then
-                ---@diagnostic disable-next-line: unused-local
-                for key, value in pairs(result) do
-                  if string.match(value.targetUri, "react/index.d.ts") then
-                    break
+                if #result > 1 then
+                  ---@diagnostic disable-next-line: unused-local
+                  for key, value in pairs(result) do
+                    if string.match(value.targetUri, "react/index.d.ts") then
+                      break
+                    end
                   end
                 end
+              else
+                util.jump_to_location(result, "utf-8")
               end
-            else
-              util.jump_to_location(result, "utf-8")
-            end
-          end,
-        }
-      })
-    end
-
-    local lua_ls = function()
-      lspconfig.lua_ls.setup({
-        on_init = function(client)
-          lsp_zero.nvim_lua_settings(client, {})
-        end,
-      })
-    end
-
-    local typst_setup = function()
-      lspconfig.tinymist.setup({
-        on_attach = function(client, bufnr)
-          local mainFile = client.config.root_dir .. '/main.typ'
-          vim.lsp.buf.execute_command({
-            command = 'tinymist.pinMain',
-            arguments = { mainFile }
-          })
-
-          local opts = {buffer = bufnr, remap = false}
-          -- run preview
-          vim.keymap.set("n", "<leader>rr", function()
-            -- open mainfile
-            vim.cmd("e " .. mainFile)
-            -- run command
-            vim.cmd.TypstPreview()
-            -- reselect previous buffer
-            vim.cmd("buffer " .. bufnr)
-          end, opts)
-          -- stop preview
-          vim.keymap.set("n", "<leader>rc", function()
-            -- open mainfile
-            vim.cmd("e " .. mainFile)
-            -- run command
-            vim.cmd.TypstPreviewStop()
-            -- reselect previous buffer
-            vim.cmd("buffer " .. bufnr)
-          end, opts)
-        end,
-        offset_encoding = "utf-8",
-        settings = {
-          formatterMode = "typstyle",
-          exportPdf = "onSave",
-        },
-      })
-    end
-
-    local ltex_setup = function()
-      lspconfig.ltex.setup({
-        filetypes = { "latex", "bib", "markdown", "plaintex", "tex" },
-        settings = {
-          ltex = {
-            enabled = { "latex", "bib", "markdown", "plaintex", "tex" },
+            end,
           }
-        }
-      })
-    end
+        })
+      end
+
+      local lua_ls = function()
+        lspconfig.lua_ls.setup({
+          on_init = function(client)
+            lsp_zero.nvim_lua_settings(client, {})
+          end,
+        })
+      end
 
     require('mason-lspconfig').setup({
-      ensure_installed = {'lua_ls'},
+      ensure_installed = {'lua_ls', 'tsserver'},
       handlers = {
         function(server_name) lspconfig[server_name].setup({}) end,
         purescriptls = purescriptls,
         eslint       = eslint,
-        ts_ls        = ts_ls,
-        lua_ls       = lua_ls,
-        tinymist     = typst_setup,
-        ltex         = ltex_setup
+        tsserver     = ts_ls,
+        lua_ls       = lua_ls
       },
     })
 
-    -- auto completion settings
+     -- auto completion settings
     local cmp = require('cmp')
     local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
@@ -222,7 +172,7 @@ return {
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         ['<Enter>'] = cmp.mapping.confirm({ select = true }),
         ['<Tab>'] = {
-          i = cmp.config.disable, -- disable tab in insert mode, use <C-n> for that!
+          i = cmp.config.disable, -- disble tab in insert mode, use <C-n> for that!
           c = cmp.config.disable
         },
       })
@@ -254,9 +204,15 @@ return {
         },
       },
     }
-    lspconfig.frege_ls.setup {}
+    lspconfig.frege_ls.setup {
+      on_attach = function(client, bufnr)
+        -- Optional: check if this is the server you expect
+          vim.keymap.set("n", "<leader>rr", function()
+            vim.cmd("! gradle shadowJar")
+          end, { buffer = bufnr, silent = true })
+        end
+    }
   end,
   priority = 1
 }
-
 
