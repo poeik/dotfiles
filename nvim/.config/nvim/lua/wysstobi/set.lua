@@ -18,6 +18,8 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
@@ -37,6 +39,14 @@ vim.opt.splitbelow = true
 
 vim.opt.spell = true
 vim.opt.spelllang = "en,de_ch" -- https://ftp.nluug.nl/vim/runtime/spell/
+-- no spell check for checkhealth
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "checkhealth",
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
+
 
 -- vertical git diff split by default
 vim.opt.diffopt:append("vertical")
@@ -44,7 +54,7 @@ vim.opt.diffopt:append("vertical")
 vim.diagnostic.config({
   virtual_text = true, -- inline errors
 })
--- needed for tree-sitter-purescript and languageserver
+-- needed for tree-sitter-purescript and language server
 vim.filetype.add({ extension = { purs = 'purescript' }})
 
 
