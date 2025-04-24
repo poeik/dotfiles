@@ -111,7 +111,6 @@ export LANG=de_CH.UTF-8
 #
 
 bindkey -s ^f "tmux-sessionizer\n"
-alias t="tmux-sessionizer"
 
 alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
 
@@ -119,6 +118,8 @@ alias G="nvim . -c G -c only" # open fugitive in current folder
 alias nv="nvim"
 alias light="nvim -c \"lua Light()\" -c \"q\""
 alias dark="nvim -c \"lua Dark()\" -c \"q\""
+
+alias n="zk --working-dir=$HOME/workspaces/notebook/"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

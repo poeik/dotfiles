@@ -87,7 +87,7 @@ return {
     vim.keymap.set('n', '<leader>sg', function() builtin.live_grep({hidden = hidden}) end, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
-    vim.keymap.set('n', '<leader>z', builtin.spell_suggest, { desc = '[z]pell suggest' })
+    vim.keymap.set('n', '<leader>zz', builtin.spell_suggest, { desc = '[z]pell suggest' })
 
 
     vim.keymap.set('n', '<leader>hf', function()
