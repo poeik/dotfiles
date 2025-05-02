@@ -22,6 +22,9 @@ return {
         path = "~/workspaces/notebook/",
       },
     },
+    completion = {
+      nvim_cmp = false,
+    },
     -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
     -- way then set 'mappings = {}'.
     mappings = {

@@ -20,8 +20,8 @@ return {
     if require("zk.util").notebook_root(vim.fn.expand('%:p')) ~= nil then
 
       local notebookRoot = require("zk.util").notebook_root(vim.fn.expand('%:p'))
-      local notesDir = notebookRoot .. "/notes"
-      local meetingsDir = notebookRoot .. "/meetings"
+      local notesDir     = notebookRoot .. "/notes"
+      local meetingsDir  = notebookRoot .. "/meetings"
 
       local newNote = function (n)
         local title = vim.fn.input('Title: ')
@@ -34,7 +34,7 @@ return {
       end
 
       local newNoteFromContent = function (n)
-        return "<Cmd>'<,'>ZkNewFromContentSelection{ dir = '" .. n .. "', title = vim.fn.input('Title: '), edit = false  }<CR>"
+        return "<Cmd>'<,'>ZkNewFromContentSelection{ dir = '" .. n .. "', title = vim.fn.input('Title: '), edit = false }<CR>"
       end
 
       vim.keymap.set('n', '<leader>zn', function() newNote(notesDir) end,
@@ -62,6 +62,7 @@ return {
       )
 
       vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", { desc = "Open notes linking to the current buffer", noremap = true, silent = false })
+      vim.keymap.set("n", "<leader>sf", "<Cmd>ZkNotes<CR>", { desc = "Search for notes by title", noremap = true, silent = false })
       -- Alternative for backlinks using pure LSP and showing the source context.
       --map('n', '<leader>zb', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
       -- Open notes linked by the current buffer.
