@@ -15,7 +15,6 @@ set number
 set ignorecase
 set smartcase
 set incsearch
-set hlsearch
 
 " enable line reordering with capital "j" & "k" in visual mode
 vnoremap J :m'>+1<CR>gv=gv
@@ -39,9 +38,11 @@ map <leader>pt :NERDTreeToggle<CR>
 nmap <C-d> <C-d>zz
 nmap <C-u> <C-u>zz
 
+map D "_d
+
 " better mapping for forward/backwards jumps
- nmap <C-o> :action Back<CR>
- nmap <C-i> :action Forward<CR>
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
 
 " search terms stay in the middle
 nmap n nzzzv
@@ -60,6 +61,8 @@ map <leader><CR> :action ShowIntentionActions<CR>
 map <leader>ss <Action>(FileStructurePopup)
 map <leader>2 :action GotoNextError<CR>
 map gr :action FindUsages<CR>
+
+map <leader>pp :action PinActiveTabToggle<CR>
 
 " run/debug
 map <leader>rd <Action>(Debug)
