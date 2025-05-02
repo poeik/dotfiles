@@ -32,4 +32,4 @@ Nvim can automatically install spell checker when needed. But some plugin
 hinder Nvim to do this. 
 To fix this
 1. open Nvim like `nvim -u NORC`
-2. Set the spell checker to the language you wish to install `:set spelllang=en spell`
+2. Set the spell checker to the language you wish to install `:set spelllang=en`
