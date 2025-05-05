@@ -1,0 +1,17 @@
+font-family = "JetBrainsMono Nerd Font"
+font-family-bold = "JetBrainsMono Nerd Font Bold"
+font-family-italic = "JetBrainsMono Nerd Font Italic"
+font-family-bold-italic = "JetBrainsMono Nerd Font Bold Italic"
+font-size = 15.0
+
+# Theme (dark mode)
+theme = dark:0x96f,light:3024 Day
+
+# Window appearance
+background-opacity = 0.90
+
+# General behavior
+window-inherit-font-size = false
+
+gtk-single-instance = false
+
