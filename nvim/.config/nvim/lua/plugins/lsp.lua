@@ -79,7 +79,7 @@ return {
         },
         settings = {
           purescript = {
-            addSpagoSources = true -- e.g. any purescript language-server config here
+            addSpagoSources = true
           }
         },
         flags = {
@@ -103,11 +103,10 @@ return {
     local ts_ls = function ()
       lspconfig.ts_ls.setup({
         handlers = {
-          -- ts_ls shows always two definitions for react components. this fixes it
+          -- ts_ls shows always two definitions for react components. This fixes it
           ["textDocument/definition"] = function(_, result, _)
             local util = require("vim.lsp.util")
             if result == nil or vim.tbl_isempty(result) then
-              -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
               return nil
             end
 
@@ -230,7 +229,7 @@ return {
 
     require('lspconfig.configs').frege_ls = {
       default_config = {
-        cmd = {"sh", "/Users/wysstobi/workspaces/mse/frege/utils/frege-lsp-server-4.1.3-alpha/bin/frege-lsp-server"},
+        cmd = {"sh",vim.fn.expand("~") .. "/workspaces/mse/frege/utils/frege-lsp-server-4.1.3-alpha/bin/frege-lsp-server"},
         filetypes = {'frege'},
         root_dir = lspconfig.util.root_pattern("settings.gradle", "build.sbt", "Makefile"),
         settings = {},
