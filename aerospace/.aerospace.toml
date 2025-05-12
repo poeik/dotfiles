@@ -123,8 +123,8 @@ automatically-unhide-macos-hidden-apps = true
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     ctrl-h = 'focus left --boundaries all-monitors-outer-frame'
-    ctrl-j = 'focus down'
-    ctrl-k = 'focus up'
+    ctrl-j = 'focus down --boundaries-action wrap-around-the-workspace'
+    ctrl-k = 'focus up --boundaries-action wrap-around-the-workspace'
     ctrl-l = 'focus right --boundaries all-monitors-outer-frame'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
@@ -173,8 +173,8 @@ automatically-unhide-macos-hidden-apps = true
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-    esc = ['reload-config', 'mode main']
-#    r = ['flatten-workspace-tree', 'mode main'] # reset layout
+   esc = ['reload-config', 'mode main']
+   f = ['flatten-workspace-tree', 'mode main'] # reset layout
 #    backspace = ['close-all-windows-but-current', 'mode main']
 
 #    # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
