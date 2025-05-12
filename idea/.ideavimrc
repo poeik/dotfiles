@@ -40,10 +40,6 @@ nmap <C-u> <C-u>zz
 
 map D "_d
 
-" better mapping for forward/backwards jumps
-nmap <C-o> :action Back<CR>
-nmap <C-i> :action Forward<CR>
-
 " search terms stay in the middle
 nmap n nzzzv
 nmap N Nzzzv
