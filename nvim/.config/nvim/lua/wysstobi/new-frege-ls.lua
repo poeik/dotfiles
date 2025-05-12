@@ -22,7 +22,7 @@ ConfigureFregeNightly = function()
 
   require('lspconfig.configs').new_frege_nightly = {
     default_config = {
-      cmd = { "java", "-Xss4m", "-jar", vim.fn.expand("~") .. "/workspaces/mse/frege/utils/new-frege-lsp-stable/frege-lsp.jar", vim.fn.expand("~") .. "/workspaces/mse/project8/frege-lsp/log.txt" },
+      cmd = { "java", "-Xss4m", "-jar", vim.fn.expand("~") .. "/workspaces/mse/project8/frege-lsp/build/libs/frege-lsp.jar", vim.fn.expand("~") .. "/workspaces/mse/project8/frege-lsp/log.txt" },
       name = "new Frege LS (nightly)",
       filetypes = { 'frege' },
       root_dir = lspconfig.util.root_pattern("build.gradle", "Makefile"),
