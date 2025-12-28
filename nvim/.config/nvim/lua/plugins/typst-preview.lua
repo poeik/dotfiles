@@ -2,7 +2,7 @@ return {
   'chomosuke/typst-preview.nvim',
   ft = 'typst',
   version = '1.*',
-  opts = {}, -- lazy.nvim will implicitly calls `setup {}`
+  opts = {}, -- lazy.nvim implicitly calls `setup {}`
   config = function()
     require('typst-preview').setup {
       -- Setting this true will enable logging debug information to

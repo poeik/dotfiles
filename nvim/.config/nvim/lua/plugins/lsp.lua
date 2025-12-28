@@ -47,6 +47,9 @@ return {
       lsp_zero.default_keymaps({buffer = bufnr})
     end
 
+    -- somehow used to enable borders for hover floating window
+    vim.o.winborder = 'rounded'
+
     lsp_zero.extend_lspconfig({
       capabilities = require('cmp_nvim_lsp').default_capabilities(),
       lsp_attach = lsp_attach,
@@ -143,12 +146,17 @@ return {
       lspconfig.tinymist.setup({
         on_attach = function(client, bufnr)
           local mainFile = client.config.root_dir .. '/main.typ'
-          vim.lsp.buf.execute_command({
-            command = 'tinymist.pinMain',
-            arguments = { mainFile }
-          })
 
-          local opts = {buffer = bufnr, remap = false}
+          -- see https://myriad-dreamin.github.io/tinymist/frontend/neovim.html#label-Working%20with%20Multiple-Files%20Projects
+          client:exec_cmd({
+            title = "pin",
+            command = "tinymist.pinMain",
+            arguments = { mainFile },
+          }, { bufnr = bufnr })
+
+          local opts = function(desc)
+            return { desc = desc, buffer = bufnr, remap = false }
+          end
           -- run preview
           vim.keymap.set("n", "<leader>rr", function()
             -- open mainfile
@@ -157,7 +165,7 @@ return {
             vim.cmd.TypstPreview()
             -- reselect previous buffer
             vim.cmd("buffer " .. bufnr)
-          end, opts)
+          end, opts("Start Typst preview"))
           -- stop preview
           vim.keymap.set("n", "<leader>rc", function()
             -- open mainfile
@@ -166,7 +174,7 @@ return {
             vim.cmd.TypstPreviewStop()
             -- reselect previous buffer
             vim.cmd("buffer " .. bufnr)
-          end, opts)
+          end, opts("Stop Typst preview"))
         end,
         offset_encoding = "utf-8",
         settings = {
@@ -227,40 +235,9 @@ return {
       })
     })
 
-    require('lspconfig.configs').frege_ls = {
-      default_config = {
-        cmd = {"sh",vim.fn.expand("~") .. "/workspaces/mse/frege/utils/frege-lsp-server-4.1.3-alpha/bin/frege-lsp-server"},
-        filetypes = {'frege'},
-        root_dir = lspconfig.util.root_pattern("settings.gradle", "build.sbt", "Makefile"),
-        settings = {},
-      },
-      commands = {
-        FregeRun = {
-          function()
-            local cmd = string.format('gradle clean runFrege')
-            -- vim.cmd(string.format('term %s', cmd))
-            local output = vim.fn.system(cmd)
-            vim.api.nvim_echo({{output, "Normal"}}, false, {})
-          end,
-          description = 'Run Frege Code',
-        },
-        FregeRepl = {
-          function()
-            local cmd = string.format('eval $(gradle -q clean replFrege)')
-            vim.cmd(string.format('term %s', cmd))
-          end,
-          description = 'Start Frege REPL',
-        },
-      },
-    }
-    lspconfig.frege_ls.setup {
-      on_attach = function(client, bufnr)
-        -- Optional: check if this is the server you expect
-          vim.keymap.set("n", "<leader>rr", function()
-            vim.cmd("! gradle shadowJar")
-          end, { buffer = bufnr, silent = true })
-        end
-    }
+    typst_setup()
+
+    vim.lsp.enable('hls')
   end,
   priority = 1
 }

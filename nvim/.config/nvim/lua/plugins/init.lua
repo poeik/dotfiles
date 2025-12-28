@@ -4,6 +4,5 @@ return {
   "folke/tokyonight.nvim",
   "rebelot/kanagawa.nvim",
   "towolf/vim-helm",
-  'jrop/jq.nvim',
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 }
