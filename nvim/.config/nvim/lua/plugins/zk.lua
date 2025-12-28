@@ -20,9 +20,28 @@ return {
     if require("zk.util").notebook_root(vim.fn.expand('%:p')) ~= nil then
 
       local notebookRoot     = require("zk.util").notebook_root(vim.fn.expand('%:p'))
-      local notesDir         = notebookRoot .. "/notes"
-      local meetingsDir      = notebookRoot .. "/meetings"
-      local dailyJournalDir  = notebookRoot .. "/journal/daily"
+      local notesDir         = notebookRoot .. "notes"
+      local meetingsDir      = notebookRoot .. "meetings"
+      local dailyJournalDir  = notebookRoot .. "journal/daily"
+
+      local newMeetingNoteForDate = function (date)
+        local title = vim.fn.input('Title: ')
+        local cmd   = string.format("ZkNew { dir = %q, title = %q }", meetingsDir, (date .. " - " .. title))
+        vim.cmd(cmd)
+      end
+
+
+      local newMeetingNoteToday = function ()
+        local current_date = os.date("%Y-%m-%d")
+        newMeetingNoteForDate(current_date)
+      end
+
+      local newMeetingNotePlanned = function ()
+        local day   = vim.fn.input('Day: ')
+        local month = vim.fn.input('Month: ')
+        local year  = os.date("%Y")
+        newMeetingNoteForDate(year .. "-" .. month .. "-" .. day)
+      end
 
       local newNote = function (n)
         local title = vim.fn.input('Title: ')
@@ -30,16 +49,30 @@ return {
         vim.cmd(cmd)
       end
 
+      local newDailyNote = function ()
+        local cmd = string.format("ZkNew { dir = %q, edit = true }", dailyJournalDir)
+        vim.cmd(cmd)
+      end
+
       local newNoteFromTitle = function (n)
-        return "<Cmd>'<,'>ZkNewFromTitleSelection { dir = '" .. n .. "', edit = false }<CR>"
+        return ":<C-u>'<,'>ZkNewFromTitleSelection { dir = '" .. n .. "', edit = false }<CR>"
       end
 
       local newNoteFromContent = function (n)
-        return "<Cmd>'<,'>ZkNewFromContentSelection{ dir = '" .. n .. "', title = vim.fn.input('Title: '), edit = false }<CR>"
-      end
+        return function()
+          -- Save the visual selection marks before they're cleared by the title input
+          local start_pos = vim.fn.getpos("'<")
+          local end_pos = vim.fn.getpos("'>")
 
-      local newDailyNote = function ()
-        return "<Cmd>ZkNew { dir = '" .. dailyJournalDir .. "', edit = false }<CR>"
+          local title = vim.fn.input('Title: ')
+          if title ~= '' then
+            -- Restore the marks
+            vim.fn.setpos("'<", start_pos)
+            vim.fn.setpos("'>", end_pos)
+
+            vim.cmd(string.format("'<,'>ZkNewFromContentSelection { dir = %q, title = %q, edit = false }", n, title))
+          end
+        end
       end
 
       vim.keymap.set('n', '<leader>zn', function() newNote(notesDir) end,
@@ -58,8 +91,11 @@ return {
         { desc = "ZK: New note in notes group from selected content", noremap = true, silent = false }
       )
 
-      vim.keymap.set('n', '<leader>zm', function() newNote(meetingsDir) end,
-        { desc = "ZkNew in meetings group", noremap = true, silent = false }
+      vim.keymap.set('n', '<leader>zm', newMeetingNoteToday,
+        { desc = "ZkNew in meetings group for today", noremap = true, silent = false }
+      )
+      vim.keymap.set('n', '<leader>zp', newMeetingNotePlanned,
+        { desc = "ZkNew in meetings group for a custom date", noremap = true, silent = false }
       )
 
       vim.keymap.set('v', '<leader>zmt', newNoteFromTitle(meetingsDir),
