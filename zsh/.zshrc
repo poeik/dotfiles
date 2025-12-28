@@ -128,7 +128,7 @@ export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-[ -f "/Users/wysstobi/.ghcup/env" ] && source "/Users/wysstobi/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 # source unic configs
 source ~/.scripts/bin/unic/unic-setup.sh
@@ -153,3 +153,24 @@ fkill() {
         echo $pid | xargs kill -${1:-9}
     fi
 }
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+# pnpm
+export PNPM_HOME="/Users/tobias.wyss/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+ 
+# Marp: Creating presentations from MD files
+
+export MARP_DIR="/Users/tobias.wyss/workspaces/personal/presentations"
+alias marp-present='USER_CWD="$PWD" pnpm --dir $MARP_DIR run dev'
+alias marp-build='USER_CWD="$PWD" pnpm --dir $MARP_DIR run build'
