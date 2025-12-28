@@ -29,7 +29,7 @@ return {
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
       vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
       vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references, opts)
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+      vim.keymap.set("n", "K", function() vim.lsp.buf.hover { border = "single" } end, opts)
       vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
       vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
       vim.keymap.set("n", "<leader>2", vim.diagnostic.goto_next, opts)
@@ -46,9 +46,6 @@ return {
 
       lsp_zero.default_keymaps({buffer = bufnr})
     end
-
-    -- somehow used to enable borders for hover floating window
-    vim.o.winborder = 'rounded'
 
     lsp_zero.extend_lspconfig({
       capabilities = require('cmp_nvim_lsp').default_capabilities(),
