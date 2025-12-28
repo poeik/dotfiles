@@ -4,11 +4,10 @@ font-family-italic = "JetBrainsMono Nerd Font Italic"
 font-family-bold-italic = "JetBrainsMono Nerd Font Bold Italic"
 font-size = 15.0
 
-# Theme (dark mode)
+# Theme 
 theme = dark:0x96f,light:3024 Day
 
-# Window appearance
-background-opacity = 0.90
+background-opacity = 0.98
 
 # General behavior
 window-inherit-font-size = false
