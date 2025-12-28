@@ -20,8 +20,8 @@ directories=(
   # mse
   $(find ~/workspaces/mse/eva                             -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/mse/frege/projects                  -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/mse/project7                        -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/mse/project8                        -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/workspaces/mse/project9                        -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces/mse/ergogen                         -mindepth 1 -maxdepth 1 -type d)
 ) 
 selected=$(echo $directories | tr " " "\n" | fzf)
