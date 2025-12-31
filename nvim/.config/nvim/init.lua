@@ -1,1 +1,6 @@
 require("wysstobi")
+vim.lsp.enable('frege')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('tinymist')
+vim.lsp.enable('hls')

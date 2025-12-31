@@ -20,7 +20,6 @@ return {
   },
   config = function()
     local lsp_zero = require('lsp-zero')
-    local lspconfig = require('lspconfig')
 
     ---@diagnostic disable-next-line: unused-local
     local lsp_attach = function(_client, bufnr)
@@ -60,151 +59,6 @@ return {
     })
     require('mason').setup({})
 
-    -- custom LSP setups
-    local purescriptls = function ()
-      lspconfig.purescriptls.setup({
-        -- Your personal on_attach function referenced before to include
-        -- keymaps & other ls options
-        on_attach = function(client, _)
-          -- Stelle sicher, dass Diagnosen bei Textänderung aktualisiert werden
-          client.resolved_capabilities.document_formatting = true
-        end,
-        handlers = {
-          ["textDocument/publishDiagnostics"] = vim.lsp.with(
-          vim.lsp.diagnostic.on_publish_diagnostics, {
-            -- Aktualisiere Diagnosen sofort bei Textänderungen
-            update_in_insert = true,
-          }
-          ),
-        },
-        settings = {
-          purescript = {
-            addSpagoSources = true
-          }
-        },
-        flags = {
-          debounce_text_changes = 150,
-        }
-      })
-    end
-
-    local eslint = function ()
-      lspconfig.eslint.setup({
-        on_attach = function(_, bufnr)
-          -- fix all autofixables on save
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "EslintFixAll",
-          })
-        end,
-      })
-    end
-
-    local ts_ls = function ()
-      lspconfig.ts_ls.setup({
-        handlers = {
-          -- ts_ls shows always two definitions for react components. This fixes it
-          ["textDocument/definition"] = function(_, result, _)
-            local util = require("vim.lsp.util")
-            if result == nil or vim.tbl_isempty(result) then
-              return nil
-            end
-
-            if vim.islist(result) then
-              -- this is opens a buffer to that result
-              -- you could loop the result and choose what you want
-              util.jump_to_location(result[1], "utf-8")
-
-              if #result > 1 then
-                ---@diagnostic disable-next-line: unused-local
-                for key, value in pairs(result) do
-                  if string.match(value.targetUri, "react/index.d.ts") then
-                    break
-                  end
-                end
-              end
-            else
-              util.jump_to_location(result, "utf-8")
-            end
-          end,
-        }
-      })
-    end
-
-    local lua_ls = function()
-      lspconfig.lua_ls.setup({
-        on_init = function(client)
-          lsp_zero.nvim_lua_settings(client, {})
-        end,
-      })
-    end
-
-    local typst_setup = function()
-      lspconfig.tinymist.setup({
-        on_attach = function(client, bufnr)
-          local mainFile = client.config.root_dir .. '/main.typ'
-
-          -- see https://myriad-dreamin.github.io/tinymist/frontend/neovim.html#label-Working%20with%20Multiple-Files%20Projects
-          client:exec_cmd({
-            title = "pin",
-            command = "tinymist.pinMain",
-            arguments = { mainFile },
-          }, { bufnr = bufnr })
-
-          local opts = function(desc)
-            return { desc = desc, buffer = bufnr, remap = false }
-          end
-          -- run preview
-          vim.keymap.set("n", "<leader>rr", function()
-            -- open mainfile
-            vim.cmd("e " .. mainFile)
-            -- run command
-            vim.cmd.TypstPreview()
-            -- reselect previous buffer
-            vim.cmd("buffer " .. bufnr)
-          end, opts("Start Typst preview"))
-          -- stop preview
-          vim.keymap.set("n", "<leader>rc", function()
-            -- open mainfile
-            vim.cmd("e " .. mainFile)
-            -- run command
-            vim.cmd.TypstPreviewStop()
-            -- reselect previous buffer
-            vim.cmd("buffer " .. bufnr)
-          end, opts("Stop Typst preview"))
-        end,
-        offset_encoding = "utf-8",
-        settings = {
-          formatterMode = "typstyle",
-          exportPdf = "onSave",
-        },
-      })
-    end
-
-    local ltex_setup = function()
-      lspconfig.ltex.setup({
-        filetypes = { "latex", "bib", "markdown", "plaintex", "tex" },
-        settings = {
-          ltex = {
-            enabled = { "latex", "bib", "markdown", "plaintex", "tex" },
-          }
-        }
-      })
-    end
-
-    require('mason-lspconfig').setup({
-      ensure_installed = {'lua_ls'},
-      handlers = {
-        function(server_name) lspconfig[server_name].setup({}) end,
-        purescriptls = purescriptls,
-        eslint       = eslint,
-        ts_ls        = ts_ls,
-        lua_ls       = lua_ls,
-        tinymist     = typst_setup,
-        ltex         = ltex_setup
-      },
-    })
-
     -- auto completion settings
     local cmp = require('cmp')
     local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -231,10 +85,6 @@ return {
         },
       })
     })
-
-    typst_setup()
-
-    vim.lsp.enable('hls')
   end,
   priority = 1
 }
