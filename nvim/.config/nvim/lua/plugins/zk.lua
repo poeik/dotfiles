@@ -83,11 +83,11 @@ return {
         { desc = "ZK: ZkNew in daily group", noremap = true, silent = false }
       )
 
-      vim.keymap.set('v', '<leader>znt', newNoteFromTitle(notesDir),
+      vim.keymap.set('v', '<leader>zn', newNoteFromTitle(notesDir),
         { desc = "ZK: New note in notes group from selected title", noremap = true, silent = false }
       )
 
-      vim.keymap.set('v', '<leader>znc', newNoteFromContent(notesDir),
+      vim.keymap.set('v', '<leader>zc', newNoteFromContent(notesDir),
         { desc = "ZK: New note in notes group from selected content", noremap = true, silent = false }
       )
 
@@ -98,7 +98,7 @@ return {
         { desc = "ZkNew in meetings group for a custom date", noremap = true, silent = false }
       )
 
-      vim.keymap.set('v', '<leader>zmt', newNoteFromTitle(meetingsDir),
+      vim.keymap.set('v', '<leader>zm', newNoteFromTitle(meetingsDir),
         { desc = "ZK: New note in meetings group from selected title", noremap = true, silent = false }
       )
 
@@ -108,6 +108,7 @@ return {
 
       vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", { desc = "ZK: Open notes linking to the current buffer", noremap = true, silent = false })
       vim.keymap.set("n", "<leader>sf", "<Cmd>ZkNotes<CR>", { desc = "ZK: Search for notes by title", noremap = true, silent = false })
+      vim.keymap.set("n", "<leader>f", "<Cmd>ZkNotes<CR>", { desc = "ZK: Search for notes by title", noremap = true, silent = false })
       -- Alternative for backlinks using pure LSP and showing the source context.
       --map('n', '<leader>zb', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
       -- Open notes linked by the current buffer.
