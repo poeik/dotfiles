@@ -124,7 +124,7 @@ automatically-unhide-macos-hidden-apps = true
     #     activate
     # end tell'
     # '''
-    ctrl-enter = '''exec-and-forget shortcuts run 'new Ghostty Terminal''''
+    ctrl-shift-enter = '''exec-and-forget shortcuts run 'new Ghostty Terminal''''
 
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
