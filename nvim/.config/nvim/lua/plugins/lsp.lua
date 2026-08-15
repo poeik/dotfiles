@@ -25,7 +25,8 @@ return {
     local lsp_attach = function(_client, bufnr)
       local opts = {buffer = bufnr, remap = false}
 
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+      -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+      vim.keymap.set("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { desc = '[G]oto [D]efinition' })
       vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
       vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references, opts)
       vim.keymap.set("n", "K", function() vim.lsp.buf.hover { border = "single" } end, opts)
