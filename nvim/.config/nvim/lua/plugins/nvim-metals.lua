@@ -43,6 +43,7 @@ return {
     metals_config.settings = {
       showImplicitArguments = true,
       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+      testUserInterface = "Test Explorer"
     }
 
     -- *READ THIS*
@@ -61,75 +62,92 @@ return {
 
     metals_config.on_attach = function(client, bufnr)
       require("metals").setup_dap()
-
       -- LSP mappings
-      -- map("n", "gi", vim.lsp.buf.implementation)
-      -- map("n", "gr", vim.lsp.buf.references)
-      -- map("n", "gds", vim.lsp.buf.document_symbol)
-      -- map("n", "gws", vim.lsp.buf.workspace_symbol)
-      map("n", "<leader>cl", vim.lsp.codelens.run)
+      map("n", "gi", vim.lsp.buf.implementation, { desc = '[G]o to [I]mplementation' })
+      map("n", "gr", vim.lsp.buf.references, { desc = '[G]o to [R]eferences' })
+      map("n", "gds", vim.lsp.buf.document_symbol, { desc = '[G]o to [D]ocument [S]ymbols' })
+      map("n", "gws", vim.lsp.buf.workspace_symbol, { desc = '[G]o to [W]orkspace [S]ymbols' })
+      map("n", "<leader>cl", vim.lsp.codelens.run, { desc = '[C]ode [L]ens run' })
       -- map("n", "<leader>sh", vim.lsp.buf.signature_help)
-      -- map("n", "<leader>rn", vim.lsp.buf.rename)
-      map("n", "<leader>f", vim.lsp.buf.format)
-      -- map("n", "<leader>ca", vim.lsp.buf.code_action)
-
+      map("n", "<leader>f", vim.lsp.buf.format, { desc = '[F]ormat buffer' })
       map("n", "<leader>ws", function()
         require("metals").hover_worksheet()
-      end)
-
+      end, { desc = '[W]ork[s]heet hover' })
       -- all workspace diagnostics
-      map("n", "<leader>aa", vim.diagnostic.setqflist)
-
+      map("n", "<leader>aa", vim.diagnostic.setqflist, { desc = '[A]ll [A]ll diagnostics to quickfix' })
       -- all workspace errors
       map("n", "<leader>ae", function()
         vim.diagnostic.setqflist({ severity = "E" })
-      end)
-
+      end, { desc = '[A]ll [E]rrors to quickfix' })
       -- all workspace warnings
       map("n", "<leader>aw", function()
         vim.diagnostic.setqflist({ severity = "W" })
-      end)
-
+      end, { desc = '[A]ll [W]arnings to quickfix' })
       -- buffer diagnostics only
-      map("n", "<leader>d", vim.diagnostic.setloclist)
-
+      map("n", "<leader>d", vim.diagnostic.setloclist, { desc = '[D]iagnostics (buffer) to loclist' })
       map("n", "[c", function()
         vim.diagnostic.goto_prev({ wrap = false })
-      end)
-
+      end, { desc = 'Go to previous [c] diagnostic' })
       map("n", "]c", function()
         vim.diagnostic.goto_next({ wrap = false })
-      end)
-
+      end, { desc = 'Go to next [c] diagnostic' })
       -- Example mappings for usage with nvim-dap. If you don't use that, you can
       -- skip these
+      map("n", "<leader>rr", function()
+        require("dap").run(require("dap").configurations.scala[1])
+      end, { desc = 'Dap [R]un cu[r]rent file' })
+
       map("n", "<leader>dc", function()
         require("dap").continue()
-      end)
-
+      end, { desc = '[D]ap start/[C]ontinue session' })
       map("n", "<leader>dr", function()
         require("dap").repl.toggle()
-      end)
-
-      map("n", "<leader>dK", function()
+      end, { desc = '[D]ap [R]epl toggle' })
+      map("n", "<leader>dk", function()
         require("dap.ui.widgets").hover()
-      end)
-
+      end, { desc = '[D]ap hover ([k])' })
       map("n", "<leader>dt", function()
         require("dap").toggle_breakpoint()
-      end)
-
+      end, { desc = '[D]ap [T]oggle breakpoint' })
       map("n", "<leader>dso", function()
         require("dap").step_over()
-      end)
-
+      end, { desc = '[D]ap [S]tep [O]ver' })
       map("n", "<leader>dsi", function()
         require("dap").step_into()
-      end)
-
+      end, { desc = '[D]ap [S]tep [I]nto' })
       map("n", "<leader>dl", function()
         require("dap").run_last()
-      end)
+      end, { desc = '[D]ap run [L]ast' })
+
+      map("n", "<leader>dst", function()
+        vim.cmd("MetalsSelectTestSuite")
+      end, { desc = '[D]ap [S]elect [T]est suite' })
+
+      map("n", "<leader>dsc", function()
+        vim.cmd("MetalsSelectTestCase")
+      end, { desc = '[D]ap [S]elect test [C]ase' })
+
+      map("v", "<leader>de", function()
+        require("dap.ui.widgets").hover()
+      end, { desc = '[D]ap [E]valuate selection' })
+
+      map("n", "<leader>dss", function()
+        local widgets = require("dap.ui.widgets")
+        widgets.sidebar(widgets.scopes).open()
+      end, { desc = '[D]ap [S]copes [s]idebar' })
+
+
+      -- auto compile
+      vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+        group = vim.api.nvim_create_augroup("MetalsAutoCompile" .. bufnr, { clear = true }),
+        buffer = bufnr,
+        callback = function()
+          if vim.bo[bufnr].modified then
+            vim.cmd("silent! write")
+            require("metals").compile_cascade()
+          end
+        end,
+      })
     end
 
     return metals_config
