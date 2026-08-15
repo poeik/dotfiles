@@ -14,3 +14,4 @@ window-inherit-font-size = false
 
 gtk-single-instance = false
 
+confirm-close-surface = false

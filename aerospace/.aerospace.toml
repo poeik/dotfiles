@@ -1,3 +1,4 @@
+config-version = 2
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
@@ -42,6 +43,13 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = true
+
+# List of workspaces that should stay alive even when they contain no windows,
+# even when they are invisible.
+# This config option is only available since 'config-version = 2'
+# Fallback value (if you omit the key): persistent-workspaces = []
+persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+
 
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -124,7 +132,10 @@ automatically-unhide-macos-hidden-apps = true
     #     activate
     # end tell'
     # '''
-    ctrl-shift-enter = '''exec-and-forget shortcuts run 'new Ghostty Terminal''''
+    # ctrl--enter = '''exec-and-forget shortcuts run 'New Ghostty Terminal in current folder''''
+    ctrl-shift-enter = '''exec-and-forget osascript ~/.scripts/bin/open-ghostty.applescript'''
+    cmd-alt-space = '''exec-and-forget osascript ~/.scripts/bin/open-finder.applescript'''
+
 
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
@@ -180,6 +191,7 @@ automatically-unhide-macos-hidden-apps = true
     ctrl-shift-s = 'mode service'
 
 
+   alt-f = 'fullscreen'
    alt-t = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 
    alt-h = ['join-with left', 'mode main']
