@@ -49,7 +49,7 @@ vmap <Leader>y "+y
 nmap <Leader>P "+P
 
 " editor actions
-map <leader>l <Action>(ReformatCode)
+map <leader>f <Action>(ReformatCode)
 map <leader>vrn <Action>(RenameElement)<Esc>
 map <leader>8 <Action>(ToggleLineBreakpoint)
 map <leader>vd <Action>(ShowErrorDescription)
