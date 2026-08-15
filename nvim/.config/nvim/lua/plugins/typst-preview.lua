@@ -28,10 +28,10 @@ return {
       -- Setting this will skip the download of the binary by the plugin.
       -- Warning: Be aware that your version might be older than the one
       -- required.
-      dependencies_bin = {
-        ['tinymist'] = nil,
-        ['websocat'] = nil
-      },
+      -- dependencies_bin = {
+      --   ['tinymist'] = 'tinymist',
+      --   ['websocat'] = 'websocat'
+      -- },
 
       -- A list of extra arguments (or nil) to be passed to previewer.
       -- For example, extra_args = { "--input=ver=draft", "--ignore-system-fonts" }

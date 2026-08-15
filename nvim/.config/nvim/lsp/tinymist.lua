@@ -1,6 +1,6 @@
 vim.lsp.config('tinymist', {
   on_attach = function(client, bufnr)
-      local mainFile = client.config.root_dir .. '/main.typ'
+      local mainFile = vim.uv.cwd() .. '/main.typ'
 
       -- see https://myriad-dreamin.github.io/tinymist/frontend/neovim.html#label-Working%20with%20Multiple-Files%20Projects
       client:exec_cmd({
