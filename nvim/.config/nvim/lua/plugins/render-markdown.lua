@@ -7,6 +7,7 @@ return {
     config = function ()
       require('render-markdown').setup({
         completions = { lsp = { enabled = false } },
+        file_types = { 'markdown', 'codecompanion' },
       })
     end
 }
