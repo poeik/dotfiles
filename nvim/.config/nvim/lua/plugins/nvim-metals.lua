@@ -69,7 +69,6 @@ return {
       map("n", "gws", vim.lsp.buf.workspace_symbol, { desc = '[G]o to [W]orkspace [S]ymbols' })
       map("n", "<leader>cl", vim.lsp.codelens.run, { desc = '[C]ode [L]ens run' })
       -- map("n", "<leader>sh", vim.lsp.buf.signature_help)
-      map("n", "<leader>f", vim.lsp.buf.format, { desc = '[F]ormat buffer' })
       map("n", "<leader>ws", function()
         require("metals").hover_worksheet()
       end, { desc = '[W]ork[s]heet hover' })
