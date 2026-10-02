@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+  echo "usage: use \`dev-env\` to replace all dotfiles."
+  echo "       use \`dev-env dry\` to dry run the replacement"
+  exit 0
+fi
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+dry="0"
+
+if  [[ $1 == "dry" ]]; then
+  dry="1"
+  shift
+fi
+
+log() {
+  if [[ $dry == "1" ]]; then
+    echo "[DRY_RUN]: $@"
+  else
+    echo "$@"
+  fi
+}
+
+execute() {
+  log "execute $@"
+  if [[ $dry == "1" ]]; then
+    return
+  fi
+
+  "$@"
+}
+
+copy_dir() {
+  from=$1
+  to=$2
+  log "Copying files from $from"
+  pushd $from > /dev/null
+  dirs=$(find . -mindepth 2 -maxdepth 2 -type d ! -path "./.*/*")
+  for dir in $dirs; do
+    base=$(basename $dir) # if the folder already exists, we copy it into it
+    execute cp -r $dir/ $to/$base
+  done
+  popd > /dev/null
+}
+
+copy_file() {
+  from=$1
+  to=$2
+
+  log "Copying files from $from"
+  pushd $from > /dev/null
+  files=$(find . -mindepth 2 -maxdepth 2 -type f ! -path "./.*/*" ! -path "*/.DS_Store")
+  for file in $files; do
+    execute cp $file $to
+  done
+  popd > /dev/null
+}
+
+copy_dir $script_dir $HOME
+copy_file $script_dir $HOME
+
