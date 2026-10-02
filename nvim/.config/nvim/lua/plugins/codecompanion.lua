@@ -5,6 +5,14 @@ local function chat_with_tag(tag)
   return function()
     local codecompanion = require("codecompanion")
     local context = require("codecompanion.utils.context").get(vim.api.nvim_get_current_buf())
+
+    -- context.get() reads the live selection while still in Visual mode, so
+    -- it must run first; leaving Visual mode active while we switch windows
+    -- below drags a stray highlight along, so exit it now that we're done.
+    if vim.fn.mode():match("^[vV\22]") then
+      vim.cmd("normal! \27")
+    end
+
     local chat = codecompanion.last_chat()
     if chat then
       chat.buffer_context = context
@@ -16,6 +24,17 @@ local function chat_with_tag(tag)
     end
     chat:add_buf_message({ role = require("codecompanion.config").constants.USER_ROLE, content = tag })
     chat.ui:open()
+
+    -- ui:open() only focuses the window when it creates one; if the chat
+    -- window was already visible (e.g. in another split/tab) it leaves focus
+    -- untouched, so jump there and put the cursor on the new content ourselves.
+    local winnr = chat.ui.winnr
+    if winnr and vim.api.nvim_win_is_valid(winnr) then
+      vim.api.nvim_set_current_win(winnr)
+      local last_line = vim.api.nvim_buf_line_count(chat.ui.chat_bufnr)
+      local last_line_content = vim.api.nvim_buf_get_lines(chat.ui.chat_bufnr, last_line - 1, last_line, true)[1]
+      vim.api.nvim_win_set_cursor(winnr, { last_line, #last_line_content })
+    end
   end
 end
 
@@ -35,7 +54,7 @@ return {
               default = { "npx", "@agentclientprotocol/claude-agent-acp" },
             },
             env = {
-              CLAUDE_CODE_OAUTH_TOKEN = ("cmd:security find-generic-password -a %s -s 'anthropic-claude' -w | tr -d '\\n'")
+              CLAUDE_CODE_OAUTH_TOKEN = ("cmd:security find-generic-password -a %s -s 'anthropic-claude-unic-token' -w | tr -d '\\n'")
                   :format(vim.env.USER),
             },
           })
@@ -53,16 +72,6 @@ return {
             },
           },
           close = false,
-        },
-      },
-      cli = {
-        agent = "claude_code",
-        agents = {
-          claude_code = {
-            cmd = "claude",
-            args = {},
-            description = "Claude Code CLI",
-          },
         },
       },
     },
