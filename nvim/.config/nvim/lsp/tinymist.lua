@@ -1,4 +1,4 @@
-vim.lsp.config('tinymist', {
+return {
   on_attach = function(client, bufnr)
       local mainFile = vim.uv.cwd() .. '/main.typ'
 
@@ -36,4 +36,4 @@ vim.lsp.config('tinymist', {
       formatterMode = "typstyle",
       exportPdf = "onSave",
     },
-})
+}
