@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# setup tmux per project when a new session starts
+
+if [[ -x ".ready-tmux" ]]; then
+  ./.ready-tmux
+elif [[ -x "$HOME/.scripts/bin/.default-tmux-setup" ]]; then
+  ~/.scripts/bin/.default-tmux-setup
+fi
+clear

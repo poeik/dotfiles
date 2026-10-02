@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# general tmux setup
+
+tmux neww -n scratch
+tmux select-window -t 1
+tmux rename-window -t 1 NVIM
+tmux send-keys "[[ -f README.md ]] && nv README.md || nv ." ^M
+tmux split-window -p 25
+tmux select-pane -t :.- # reselect the NVIM pane
+

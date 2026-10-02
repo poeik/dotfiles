@@ -6,7 +6,7 @@ if [[ $# -eq 1 ]]; then
 else
 
 directories=(
-  $(find ~/workspaces/personal                            -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/workspaces/personal                            -mindepth 0 -maxdepth 1 -type d)
   $(find ~/workspaces/personal/dotfiles/nvim/.config/nvim -mindepth 0 -maxdepth 0 -type d)
   $(find ~/workspaces/obsidian                            -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspaces                                     -mindepth 0 -maxdepth 0 -type d)
@@ -17,12 +17,6 @@ directories=(
   $(find ~/workspaces/boosters                            -mindepth 1 -maxdepth 1 -type d)
   $(find ~/                                               -mindepth 0 -maxdepth 0 -type d)
   $(find ~/Desktop/.tmp                                   -mindepth 0 -maxdepth 0 -type d)
-  # mse
-  $(find ~/workspaces/mse/eva                             -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/mse/frege/projects                  -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/mse/project8                        -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/mse/project9                        -mindepth 1 -maxdepth 1 -type d)
-  $(find ~/workspaces/mse/ergogen                         -mindepth 1 -maxdepth 1 -type d)
 ) 
 selected=$(echo $directories | tr " " "\n" | fzf)
 
@@ -32,15 +26,13 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _) # select the last path element 
+selected_name=$(basename "$selected" | tr ":,. " "____") # select the last path element 
 tmux_running=$(ps -e | grep tmux)
-
-# change the title of the window
-echo -ne "\033]0;${selected_name}\007"
 
 # create new session if no session with this name exists
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
     tmux new-session -ds $selected_name -c $selected
+    tmux send-keys -t $selected_name "ready-tmux" ^M 
 fi
 
 if [[ -z $TMUX ]]; then  
