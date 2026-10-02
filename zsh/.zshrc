@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/workspaces/mse/.bin:$HOME/.scripts/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.scripts/bin:/usr/local/bin:$PATH
 
 # coursier
 export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
@@ -88,38 +88,14 @@ antigen apply
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 export LANG=de_CH.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
 
 bindkey -s ^f "tmux-sessionizer\n"
 
-alias origin="git remote -v | head -n 1 | awk -F \"@\" '{print $2}' | awk -F \" \" '{print $1}' | sed 's/:/\//g' | sed 's/.git//g' | awk '{print \"http://\"$1}' | xargs open"
-
 alias G="nvim . -c G -c only" # open fugitive in current folder
 alias nv="nvim"
-alias light="nvim -c \"lua Light()\" -c \"q\""
-alias dark="nvim -c \"lua Dark()\" -c \"q\""
-
-alias n="zk --working-dir=$HOME/workspaces/notebook/"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -129,9 +105,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
-
-# source unic configs
-source ~/.scripts/bin/unic/unic-setup.sh
 
 # fzf magic
 export FZF_DEFAULT_OPTS='--height=80% --layout=reverse --info=inline --border --margin=1 --padding=1'
@@ -154,12 +127,6 @@ fkill() {
     fi
 }
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/tobias.wyss/workspaces/unic/jungfrau/google-cloud-sdk/completion.zsh.inc'; fi
-
 
 # pnpm
 export PNPM_HOME="/Users/tobias.wyss/Library/pnpm"
@@ -170,7 +137,6 @@ esac
 # pnpm end
  
 # Marp: Creating presentations from MD files
-
-export MARP_DIR="/Users/tobias.wyss/workspaces/personal/presentations"
+export MARP_DIR="$HOME/workspaces/personal/presentations"
 alias marp-present='USER_CWD="$PWD" pnpm --dir $MARP_DIR run dev'
 alias marp-build='USER_CWD="$PWD" pnpm --dir $MARP_DIR run build'
