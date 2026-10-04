@@ -63,8 +63,14 @@ copy() {
 source $script_dir/lib/os.sh
 
 case $OS in
-  "macos") os_dir=$script_dir/macos ;;
-  "wsl")   os_dir=$script_dir/wsl ;;
+  "macos") 
+    os_dir=$script_dir/macos 
+    home=$HOME
+    ;;
+  "wsl")   
+    os_dir=$script_dir/windows
+    home=$(wslpath "$(cmd.exe /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r')")
+    ;;
   *) 
     log "Unsupported platform (need macOS or WSL)"
     exit 1
@@ -75,4 +81,4 @@ common=$script_dir/common
 log "$script_dir -- os: $OS -- filter: $filter"
 
 copy $common $HOME
-copy $os_dir $HOME
+copy $os_dir $home
