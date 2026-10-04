@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 
-if [[ $1 == "--help" || $1 == "-h" ]]; then
-  echo "usage: use \`dev-env\` to replace all dotfiles."
-  echo "       use \`dev-env dry\` to dry run the replacement"
-  exit 0
-fi
-
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 dry="0"
 
-if  [[ $1 == "dry" ]]; then
-  dry="1"
+while [[ $# -gt 0 ]]; do
+  if [[ $1 == "--help" || $1 == "-h" ]]; then
+    echo "usage: use \`dev-env\` to replace all dotfiles."
+    echo "       use \`dev-env <filter-query>\` to only replace dotfiles whose name contains the given string"
+    echo "       use \`dev-env dry <filter-query>\` to dry run the replacement"
+    exit 0
+  elif  [[ $1 == "dry" ]]; then
+    dry="1"
+  else
+    filter="$1"
+    break
+  fi
   shift
-fi
+done
 
 log() {
   if [[ $dry == "1" ]]; then
@@ -31,32 +35,35 @@ execute() {
   "$@"
 }
 
-copy_dir() {
+copy_generic() {
   from=$1
   to=$2
-  log "-------- Copying dirs from $from --------"
+  type=$3 # 'f' for file, 'd' for directories
+
   pushd $from > /dev/null
-  dirs=$(find . -mindepth 2 -maxdepth 2 -type d ! -path "./.*/*")
-  for dir in $dirs; do
-    base=$(basename $dir) # if the folder already exists, we copy it into it
-    execute cp -r $dir/ $to/$base
+  files=$(find . -mindepth 2 -maxdepth 2 -type $type ! -path "./.*/*" ! -path "*/.DS_Store")
+  for file in $files; do
+    if [[ $file != *"$filter"* ]]; then
+      log "ignoring $file"
+      continue
+    fi
+    if [[ $type == "d" ]]; then
+      base=$(basename $file) # if the directory already exists, we copy it into it
+      execute cp -r $file/ $to/$base
+    else
+      execute cp $file $to
+    fi
   done
   popd > /dev/null
-  log "-------- End copying dirs --------"
 }
 
-copy_file() {
+copy() {
   from=$1
   to=$2
-
-  log "-------- Copying files from $from --------"
-  pushd $from > /dev/null
-  files=$(find . -mindepth 2 -maxdepth 2 -type f ! -path "./.*/*" ! -path "*/.DS_Store")
-  for file in $files; do
-    execute cp $file $to
-  done
-  popd > /dev/null
-  log "-------- End copying files --------"
+  log "-------- Copying from $from --------"
+  copy_generic $from $to "d"
+  copy_generic $from $to "f"
+  log "-------- End copying --------"
 }
 
 source ./lib/os.sh
@@ -65,12 +72,13 @@ case $OS in
   "macos") os_dir=$script_dir/macos ;;
   "wsl")   os_dir=$script_dir/wsl ;;
   *) 
-    log "OS not supported!"
+    log "Unsupported platform (need macOS or WSL)"
     exit 1
 esac
 
 common=$script_dir/common
-copy_dir $common $HOME
-copy_file $common $HOME
-copy_dir $os_dir $HOME
-copy_file $os_dir $HOME
+
+log "$script_dir -- os: $OS -- filter: $filter"
+
+copy $common $HOME
+copy $os_dir $HOME
