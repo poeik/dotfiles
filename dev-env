@@ -60,7 +60,7 @@ copy() {
   log "-------- End copying --------"
 }
 
-source ./lib/os.sh
+source $script_dir/lib/os.sh
 
 case $OS in
   "macos") os_dir=$script_dir/macos ;;
