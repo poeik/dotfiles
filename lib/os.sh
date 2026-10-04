@@ -14,7 +14,3 @@ detect_os() {
 
 OS=$(detect_os)
 export OS
-
-is_macos() { [[ $OS == "macos" ]]; }
-is_wsl() { [[ $OS == "wsl" ]]; }
-

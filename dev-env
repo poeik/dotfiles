@@ -35,34 +35,28 @@ execute() {
   "$@"
 }
 
-copy_generic() {
+copy() {
   from=$1
   to=$2
-  type=$3 # 'f' for file, 'd' for directories
 
+  log "-------- Copying from $from --------"
   pushd $from > /dev/null
-  files=$(find . -mindepth 2 -maxdepth 2 -type $type ! -path "./.*/*" ! -path "*/.DS_Store")
+  # ignore hidden files/dirs
+  files=$(find . -mindepth 2 -maxdepth 2 ! -path "./.*/*" ! -path "*/.DS_Store")
   for file in $files; do
     if [[ $file != *"$filter"* ]]; then
       log "ignoring $file"
       continue
     fi
-    if [[ $type == "d" ]]; then
-      base=$(basename $file) # if the directory already exists, we copy it into it
+    # if the directory already exists, we copy it into it
+    if [[ -d $file ]]; then
+      base=$(basename $file) 
       execute cp -r $file/ $to/$base
     else
       execute cp $file $to
     fi
   done
   popd > /dev/null
-}
-
-copy() {
-  from=$1
-  to=$2
-  log "-------- Copying from $from --------"
-  copy_generic $from $to "d"
-  copy_generic $from $to "f"
   log "-------- End copying --------"
 }
 
