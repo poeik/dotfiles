@@ -34,7 +34,7 @@ execute() {
 copy_dir() {
   from=$1
   to=$2
-  log "Copying files from $from"
+  log "-------- Copying dirs from $from --------"
   pushd $from > /dev/null
   dirs=$(find . -mindepth 2 -maxdepth 2 -type d ! -path "./.*/*")
   for dir in $dirs; do
@@ -42,21 +42,35 @@ copy_dir() {
     execute cp -r $dir/ $to/$base
   done
   popd > /dev/null
+  log "-------- End copying dirs --------"
 }
 
 copy_file() {
   from=$1
   to=$2
 
-  log "Copying files from $from"
+  log "-------- Copying files from $from --------"
   pushd $from > /dev/null
   files=$(find . -mindepth 2 -maxdepth 2 -type f ! -path "./.*/*" ! -path "*/.DS_Store")
   for file in $files; do
     execute cp $file $to
   done
   popd > /dev/null
+  log "-------- End copying files --------"
 }
 
-copy_dir $script_dir $HOME
-copy_file $script_dir $HOME
+source ./lib/os.sh
 
+case $OS in
+  "macos") os_dir=$script_dir/macos ;;
+  "wsl")   os_dir=$script_dir/wsl ;;
+  *) 
+    log "OS not supported!"
+    exit 1
+esac
+
+common=$script_dir/common
+copy_dir $common $HOME
+copy_file $common $HOME
+copy_dir $os_dir $HOME
+copy_file $os_dir $HOME

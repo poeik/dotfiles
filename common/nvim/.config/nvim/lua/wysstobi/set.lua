@@ -57,6 +57,16 @@ vim.diagnostic.config({
 -- needed for tree-sitter-purescript and language server
 vim.filetype.add({ extension = { purs = 'purescript' }})
 
+-- default files without an extension to the sh filetype
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.expand("%:e") == "" then
+      vim.cmd("setfiletype sh")
+    end
+  end,
+})
+
 
 -- disable default nvim file explorer 
 vim.g.loaded_netrw       = 1
