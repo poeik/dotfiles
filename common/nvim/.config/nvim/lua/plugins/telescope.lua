@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 return {
-  'nvim-telescope/telescope.nvim', tag = '0.1.5',
+  'nvim-telescope/telescope.nvim', tag = 'v0.2.2',
   dependencies = {
     -- ui-select sets enables vim.ui.select to telescope
     'nvim-telescope/telescope-ui-select.nvim',
