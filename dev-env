@@ -9,7 +9,7 @@ while [[ $# -gt 0 ]]; do
     echo "       use \`dev-env <filter-query>\` to only replace dotfiles whose name contains the given string"
     echo "       use \`dev-env dry <filter-query>\` to dry run the replacement"
     exit 0
-  elif  [[ $1 == "dry" ]]; then
+  elif [[ $1 == "dry" ]]; then
     dry="1"
   else
     filter="$1"
@@ -51,7 +51,7 @@ copy() {
     # if the directory already exists, we copy it into it
     if [[ -d $file ]]; then
       base=$(basename $file) 
-      execute cp -r $file/ $to/$base
+      os_cp $file $to/$base
     else
       execute cp $file $to
     fi
@@ -63,15 +63,21 @@ copy() {
 source $script_dir/lib/os.sh
 
 case $OS in
-  "macos") 
+  "macos")  
     os_dir=$script_dir/macos 
     home=$HOME
+    os_cp() { 
+      execute cp -r $1 $2
+    }
     ;;
   "wsl")   
     os_dir=$script_dir/windows
     home=$(wslpath "$(cmd.exe /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r')")
+    os_cp() { 
+      execute cp -r $1/. $2/
+    }
     ;;
-  *) 
+  *)  
     log "Unsupported platform (need macOS or WSL)"
     exit 1
 esac
