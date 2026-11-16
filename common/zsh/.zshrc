@@ -129,14 +129,20 @@ fkill() {
 
 
 # pnpm
-export PNPM_HOME="/Users/tobias.wyss/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
+
+
 # pnpm end
  
 # Marp: Creating presentations from MD files
 export MARP_DIR="$HOME/workspaces/personal/presentations"
 alias marp-present='USER_CWD="$PWD" pnpm --dir $MARP_DIR run dev'
 alias marp-build='USER_CWD="$PWD" pnpm --dir $MARP_DIR run build'
+
+# Bitwarden SSH configuraiotn
+export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+
