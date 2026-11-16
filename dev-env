@@ -66,8 +66,9 @@ case $OS in
   "macos")  
     os_dir=$script_dir/macos 
     home=$HOME
-    os_cp() { 
-      execute cp -r $1 $2
+    os_cp() {
+      execute mkdir -p $2
+      execute cp -r $1/. $2/
     }
     ;;
   "wsl")   
