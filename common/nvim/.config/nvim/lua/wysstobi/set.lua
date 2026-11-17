@@ -53,7 +53,18 @@ vim.opt.diffopt:append("vertical")
 
 vim.diagnostic.config({
   virtual_text = true, -- inline errors
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '✘',
+      [vim.diagnostic.severity.WARN]  = '▲',
+      [vim.diagnostic.severity.HINT]  = '⚑',
+      [vim.diagnostic.severity.INFO]  = '»',
+    },
+  },
 })
+
+-- border for hover, signature help, diagnostic floats, completion docs...
+vim.o.winborder = 'rounded'
 -- needed for tree-sitter-purescript and language server
 vim.filetype.add({ extension = { purs = 'purescript' }})
 

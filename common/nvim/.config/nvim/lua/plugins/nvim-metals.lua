@@ -57,8 +57,8 @@ return {
     -- any messages from metals. There is more info in the help docs about this
     metals_config.init_options.statusBarProvider = "off"
 
-    -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-    metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+    -- make sure the correct capabilities for snippets are set
+    metals_config.capabilities = require("blink.cmp").get_lsp_capabilities()
 
     metals_config.on_attach = function(client, bufnr)
       require("metals").setup_dap()

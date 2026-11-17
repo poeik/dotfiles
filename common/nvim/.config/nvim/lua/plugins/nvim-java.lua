@@ -23,7 +23,6 @@ return {
   },
   config = function()
     require('java').setup()
-    require('lspconfig').jdtls.setup({})
   end,
   keys = {
     {'<F5>',       function() require('dap').continue() end, desc = ""},
